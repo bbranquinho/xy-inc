@@ -74,7 +74,7 @@ $ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "des
   }
 ```
 
-PUT /products/{id} - Edita um produto
+PUT /products - Edita um produto
 
 ```sh
 $ curl -H "Content-Type: application/json" -X PUT -d '{"id":5, "name":"Produto Atualizado", "description":"Descrição Atualizada", "price":10.23, category":"Categoria Atualizada"}' http://localhost:8080/xy-inc/api/product
@@ -88,6 +88,11 @@ $ curl -H "Content-Type: application/json" -X PUT -d '{"id":5, "name":"Produto A
 ```
 
 DELETE /products/{id} - Deleta um produto
+
+```sh
+$ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/xy-inc/api/product/5
+```
+DELETE /products - Deleta um produto
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":5}' http://localhost:8080/xy-inc/api/product

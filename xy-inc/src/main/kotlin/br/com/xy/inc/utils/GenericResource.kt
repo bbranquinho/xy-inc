@@ -13,7 +13,7 @@ import java.util.*
 abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
 
     @Autowired
-    lateinit var repository: JpaRepository<T, K>;
+    lateinit var repository: JpaRepository<T, K>
 
     @GetMapping("/{id}")
     fun findById(@PathVariable(value = "id") id: K) =
@@ -22,7 +22,7 @@ abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
                 .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @GetMapping
-    fun findAll() = repository.findAll();
+    fun findAll() = repository.findAll()
 
     @PostMapping
     fun add(@RequestBody entityObject: T) = repository.save(entityObject)
@@ -36,5 +36,8 @@ abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
 
     @DeleteMapping
     fun delete(@RequestBody entityObject: T) = repository.delete(entityObject)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable(value = "id") id: K) = repository.delete(id)
 
 }
