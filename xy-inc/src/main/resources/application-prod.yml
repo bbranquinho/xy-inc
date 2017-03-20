@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/xy_inc?autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    database: mysql
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  h2:
+    console:
+      enabled: false
+logging:
+  file: build/xy_inc.log
+  level:
+    br.com.xy.inc: INFO
+    org.springframework: WARN
+    org.hibernate: WARN

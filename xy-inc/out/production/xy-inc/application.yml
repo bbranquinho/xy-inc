@@ -1,0 +1,8 @@
+# GLOBAL CONFIGURATION
+spring:
+  application:
+    name: xy-inc
+
+server:
+  contextPath: /xy-inc
+  port: 8080
