@@ -105,14 +105,14 @@ $ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "des
 }
 ```
 
-PUT /products/{id} - Edita um produto
+PUT /products - Edita um produto
 
 ```sh
 $ curl -H "Content-Type: application/json" -X PUT -d '{"Id":"7c8c68e1-0d79-11e7-9aa5-f40f2421754f","Name":"Product A","Description":"Atualizacao","Price":25.9,"Category":"Category A"}' http://localhost:8080/api/product
   
 ```
 
-DELETE /products/{id} - Deleta um produto
+DELETE /products - Deleta um produto
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE -d '{"Id":"7c8c68e1-0d79-11e7-9aa5-f40f2421754f"}' http://localhost:8080/api/product
