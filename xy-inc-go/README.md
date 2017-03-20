@@ -7,7 +7,7 @@ Este projeto conta com uma aplicação REST com serviços de CRUD para uma entid
 Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. go 1.7.4
-    2. Apache Cassandra
+    2. Apache Cassandra 3.10
 
 Inicialmente é preciso rodar o Apache Cassadra. Neste projeto não foram realizadas configurações de segurança, logo, não é necessário de usuário e senha para acessar o Cassandra.
 
