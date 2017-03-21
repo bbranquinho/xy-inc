@@ -7,7 +7,7 @@ Este projeto conta com uma aplicação REST com serviços de CRUD para uma entid
 Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
-    2. Kotlin 1.1 (opcional, recomendado)
+    2. Kotlin 1.1 (opcional)(recomendado)
     3. Gradle 2.14.1 (pode ser usado em outras versões)
 
 O projeto utiliza um banco embarcado (H2) para desenvolvimento e para produção está configurado inicialmente o MySQL, apesar de que outros bancos podem ser configurados facilmente.
