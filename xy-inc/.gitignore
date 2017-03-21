@@ -23,6 +23,10 @@
 # Gradle
 ######################
 .gradle/**
+out/**
+gradle/**
+gradlew
+gradlew.bat
 
 ######################
 # Project Specific

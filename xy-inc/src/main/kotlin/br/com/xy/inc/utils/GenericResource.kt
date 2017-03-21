@@ -29,7 +29,7 @@ abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
 
     @PutMapping
     fun update(@RequestBody entityObject: T) =
-        if ((entityObject == null) || (entityObject.id == null))
+        if (entityObject.id == null)
             ResponseEntity<T>(HttpStatus.NOT_FOUND)
         else
             ResponseEntity<T>(repository.save(entityObject),  HttpStatus.OK)
