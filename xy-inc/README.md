@@ -105,7 +105,7 @@ Como um dos objetivos da aplicação é que seja consumida por outras aplicaçõ
 É possível acessar o banco embarcado pela a URL: http://localhost:8080/xy-inc/h2-console
 
 * JDBC URL: jdbc:h2:mem:xy_inc
-* User Name: root
+* Username: root
 * Password: 
 
 ![Swagger](https://cloud.githubusercontent.com/assets/1013619/24131859/e3f357d8-0dcf-11e7-8a38-9be645f39fba.png)
