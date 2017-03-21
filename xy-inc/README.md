@@ -43,8 +43,6 @@ $ curl http://localhost:8080/xy-inc/api/product
   "description" : "Apple iPhone 7 Unlocked Phone 128 GB",
   "price" : 724.890,
   "category" : "Cell Phones"
-* Curl_http_done: called premature == 0
-* Connection #0 to host localhost left intact
 }]
 ```
 
