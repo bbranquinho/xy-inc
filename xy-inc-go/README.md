@@ -51,8 +51,6 @@ $ go build
 $ ./xy-inc-go
 ```
 
-A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (xy-inc-0.0.1-SNAPSHOT.war) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
-
 ## 3. Testando os serviços
 
 Uma vez com a aplicação rodando é necessário apenas realizar a chamada dos serviços. A seguir são mostradas as chamadas e os respectivos resultados.
