@@ -100,11 +100,15 @@ $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":5}' http://localh
 
 Como um dos objetivos da aplicação é que seja consumida por outras aplicações, foi disponibilizada uma documentação dos serviços. Esta documentação é acessível na URL http://localhost:8080/xy-inc/swagger-ui.html
 
+![Swagger](https://cloud.githubusercontent.com/assets/1013619/24131856/dfff61b2-0dcf-11e7-9340-66d5a7fe6a0f.png)
+
 É possível acessar o banco embarcado pela a URL: http://localhost:8080/xy-inc/h2-console
 
 * JDBC URL: jdbc:h2:mem:xy_inc
 * User Name: root
 * Password: 
+
+![Swagger](https://cloud.githubusercontent.com/assets/1013619/24131859/e3f357d8-0dcf-11e7-8a38-9be645f39fba.png)
 
 ## 5. Observações
 
