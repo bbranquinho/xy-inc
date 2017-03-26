@@ -143,7 +143,7 @@ $ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobil
 $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":1}' http://localhost:8080/mobile-api/api/product
 ```
 
-Para cada API é criado um projeto, sendo este colocado na pasta ***{local do projeto xy-inc-api}/projects***. Se necessário este projeto pode ser rodado sem a dependência do projeto de criação de APIs (**xy-inc-api**). Para isso é necessário apenas executar os seguintes comandos na pasta do projeto ***{local do projeto xy-inc-api}/projects/{nome da API}***:
+Para cada API é criado um projeto, sendo este colocado na pasta **{local do projeto xy-inc-api}/projects**. Se necessário este projeto pode ser rodado sem a dependência do projeto de criação de APIs (**xy-inc-api**). Para isso é necessário apenas executar os seguintes comandos na pasta do projeto **{local do projeto xy-inc-api}/projects/{nome da API}**:
 
 ```sh
 $ gradle clean build
