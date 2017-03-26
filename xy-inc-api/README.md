@@ -59,6 +59,8 @@ $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: appli
  }' 'http://localhost:9000/xy-inc/api/project'
 ```
 
+Toda a API criada fica disponível na pasta ***projects***.
+
 Após a criação do projeto, podem ser criadas entidades. Estas entidades são compostas pelos seguintes parâmetros:
 
 * ***projectName***: Nome do projeto. Este nome faz referência ao projeto que já foi criado anteriormente.
