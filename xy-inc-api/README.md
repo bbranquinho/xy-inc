@@ -70,7 +70,7 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
     * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
     * *Exemplo*: **"name": "description", "type": "STRING"**
 
-A partir do atributos da entidade, é realizada sua criação com a chamado POST do serviço **http://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
+A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **http://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
 
 ```sh
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
