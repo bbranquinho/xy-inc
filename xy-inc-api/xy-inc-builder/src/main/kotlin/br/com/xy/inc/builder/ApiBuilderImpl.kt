@@ -27,6 +27,72 @@ open class ApiBuilderImpl : ApiBuilder {
     @Autowired
     lateinit var mapper: ObjectMapper
 
+    override fun isProjectExists(projectName: String): Boolean {
+        return File(applicationProperties.projectPath + "/" + projectName).exists()
+    }
+
+    override fun isEntityExists(projectName: String, entityName: String): Boolean {
+        return File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName.toLowerCase() + ".json").exists()
+    }
+
+    override fun createEntity(projectName: String, entity: EntityBean) {
+        val  project = mapper.readValue(File(applicationProperties.projectPath + "/" + projectName), ProjectBean::class.java)
+
+        createEntity(project, entity)
+    }
+
+    override fun getAllProjects(): List<ProjectBean> {
+        val projectFilePath = File(applicationProperties.projectPath)
+        val projects = ArrayList<ProjectBean>()
+
+        projectFilePath.listFiles{ f -> f.isDirectory }.forEach {
+            val project = File(it.absolutePath + "/.xyi/project.json")
+
+            if (project.exists() && project.isFile()) {
+                projects.add(mapper.readValue(project, ProjectBean::class.java))
+            } else {
+                logger.error("Project not found [%s]".format(project.absolutePath))
+            }
+        }
+
+        return projects
+    }
+
+    override fun getProject(projectName: String): ProjectBean? {
+        val project = File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json")
+
+        if (project.exists() && project.isFile()) {
+            return mapper.readValue(project, ProjectBean::class.java)
+        } else {
+            return null
+        }
+    }
+
+    override fun getEntitiyByProject(projectName: String, entityName: String): EntityBean? {
+        val project = File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName + ".json")
+
+        if (project.exists() && project.isFile()) {
+            return mapper.readValue(project, EntityBean::class.java)
+        } else {
+            return null
+        }
+    }
+
+    override fun getEntitiesByProject(projectName: String): List<EntityBean>? {
+        val entities = ArrayList<EntityBean>()
+        val project = File(applicationProperties.projectPath + "/" + projectName + "/.xyi")
+
+        if (!project.exists()) {
+            return null
+        }
+
+        project.listFiles { f -> f.isFile && !f.name.equals("project.json") }.forEach {
+            entities.add(mapper.readValue(it, EntityBean::class.java))
+        }
+
+        return entities
+    }
+
     override fun createProject(projectTemplate: ProjectBean) {
         val file = File(applicationProperties.projectPath)
 
@@ -89,20 +155,6 @@ open class ApiBuilderImpl : ApiBuilder {
         saveCode(entityProperties, "/templates/entity/Resource.xyi", entityFolder, entitySimpleName + "Resource.kt")
 
         saveProperties(entity, entity.name + ".json", projectFilePath)
-    }
-
-    override fun isProjectExists(projectName: String): Boolean {
-        return File(applicationProperties.projectPath + "/" + projectName).exists()
-    }
-
-    override fun isEntityExists(projectName: String, entityName: String): Boolean {
-        return File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName.toLowerCase() + ".json").exists()
-    }
-
-    override fun createEntity(projectName: String, entity: EntityBean) {
-        val  project = mapper.readValue(File(applicationProperties.projectPath + "/" + projectName), ProjectBean::class.java);
-
-        createEntity(project, entity)
     }
 
     private fun createPackafeFolders(projectFilePath: File, project: ProjectBean) {

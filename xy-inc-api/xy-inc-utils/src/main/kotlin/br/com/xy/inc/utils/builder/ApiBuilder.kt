@@ -9,6 +9,14 @@ interface ApiBuilder {
 
     fun isEntityExists(projectName: String, entityName: String): Boolean
 
+    fun getAllProjects(): List<ProjectBean>
+
+    fun getProject(projectName: String): ProjectBean?
+
+    fun getEntitiesByProject(projectName: String): List<EntityBean>?
+
+    fun getEntitiyByProject(projectName: String, entityName: String): EntityBean?
+
     fun createProject(projectTemplate: ProjectBean)
 
     fun createEntity(projectName: String, entity: EntityBean)
