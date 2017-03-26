@@ -1,0 +1,29 @@
+dependencies {
+    compile project(':xy-inc-builder')
+    compile project(':xy-inc-service')
+    compile project(':xy-inc-utils')
+
+    compile ('io.springfox:springfox-swagger-ui:2.6.1')
+    compile ('io.springfox:springfox-swagger2:2.6.1')
+}
+
+apply plugin: 'war'
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir 'src/main/kotlin'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        kotlin {
+            srcDir 'src/test/kotlin'
+        }
+        resources {
+            srcDir 'src/test/resources'
+        }
+    }
+}

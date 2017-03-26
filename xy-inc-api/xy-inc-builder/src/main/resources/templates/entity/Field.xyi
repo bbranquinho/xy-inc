@@ -1,0 +1,2 @@
+    @Column(name = "@column@", unique = @unique@, nullable = @nullable@, length = @length@)
+    var @name@: @type@@isNullableField@ = @defaultValue@

@@ -1,0 +1,6 @@
+logging:
+  file: build/xy_inc.log
+  level:
+    br.com.xy.inc: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO

@@ -1,0 +1,3 @@
+xyIncGroup=@packageName@
+xyIncVersion=@projectVersion@
+kotlinVersion=1.1.1

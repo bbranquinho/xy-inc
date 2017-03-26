@@ -1,0 +1,6 @@
+rootProject.name = 'xy-inc-api'
+
+include 'xy-inc-builder'
+include 'xy-inc-factory'
+include 'xy-inc-service'
+include 'xy-inc-utils'

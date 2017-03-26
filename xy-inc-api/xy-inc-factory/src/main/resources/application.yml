@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: xy-inc
+  profiles:
+    active: dev
+
+server:
+  contextPath: /xy-inc
+  port: 9000
+app:
+  project:
+    path: projects
