@@ -23,9 +23,9 @@ $ java -jar xy-inc-factory/build/libs/xy-inc-factory-0.0.1-SNAPSHOT.war
 
 A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (xy-inc-0.0.1-SNAPSHOT.war) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
 
-## 3. Criação de Projetos e Entidades
+## 3. Criação de APIs e Entidades
 
-Para realizar a criação de um novo projeto é necessário especificar alguns parâmetros, sendo eles:
+Para realizar a criação de uma nova API/projeto é necessário especificar alguns parâmetros, sendo eles:
 
 * ***name***: Nome do projeto.
     * *Exemplo*: **mobile-api**
