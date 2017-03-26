@@ -108,9 +108,7 @@ Para toda entidade criada é atribuída uma propriedade **id**, responsável por
 
 Toda vez que projetos ou entidades são criadas, alguns eventos ocorrem na aplicação (projeto).
 
-Após a criação de um novo projeto ele automaticamente é executado, conforme os parâmetros de sua criação.
-
-Outro ponto importante, toda entidade criada faz com que o projeto relacionado a entidade seja reiniciado. 
+Após a criação de um novo projeto ele automaticamente é executado, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que o projeto relacionado a entidade seja reiniciado. 
 
 Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados com o [Flyway](https://flywaydb.org/) ou [Liquibase](http://www.liquibase.org/). Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
 
@@ -121,37 +119,37 @@ Uma vez com a aplicação rodando é as entidades criadas, são disponibilizados
 * GET /**{nome do projeto}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
 
 ```sh
-$ curl http://localhost:8080/xy-inc/api/product
+$ curl http://localhost:8080/mobile-api/api/product
 ```
 
 * GET /**{nome do projeto}**/api/**{entidade}**/**{id}** - Busca uma entidade pelo seu id.
 
 ```sh
-$ curl http://localhost:8080/xy-inc/api/product/1
+$ curl http://localhost:8080/mobile-api/api/product/1
 ```
 
 * POST /**{nome do projeto}**/api/**{entidade}** - Cria um novo registro para a entidade.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "description":"Descrição 1", "price":10.23, "category":"Categoria 1"}' http://localhost:8080/xy-inc/api/product
+$ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "description":"Descrição 1", "price":10.23, "category":"Categoria 1"}' http://localhost:8080/mobile-api/api/product
 ```
 
 * PUT /**{nome do projeto}**/api/**{entidade}** - Edita o registro de uma entidade.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X PUT -d '{"id":3, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/xy-inc/api/product
+$ curl -H "Content-Type: application/json" -X PUT -d '{"id":3, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/mobile-api/api/product
 ```
 
 * DELETE /**{nome do projeto}**/api/**{entidade}**/**{id}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/xy-inc/api/product/3
+$ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobile-api/api/product/3
 ```
 
 * DELETE /**{nome do projeto}**/api/**{entidade}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X DELETE -d '{"id":3}' http://localhost:8080/xy-inc/api/product
+$ curl -H "Content-Type: application/json" -X DELETE -d '{"id":3}' http://localhost:8080/mobile-api/api/product
 ```
 
 ### 3.3. Outros Recursos
