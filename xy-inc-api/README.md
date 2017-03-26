@@ -154,9 +154,9 @@ $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":3}' http://localh
 
 ### 3.3. Outros Recursos
 
-Para cada projeto existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **http://localhost:{porta do projeto}/{nome do projeto}/swagger-ui.html**
+Para cada projeto existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta do projeto}/{nome do projeto}/swagger-ui.html**
 
-Além do Swagger, o banco de dados pode ser acessado em **http://localhost:{porta do projeto}/{nome do projeto}/h2-console** O usuário e a senha do banco são aqueles usados na criação do projeto e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação do projeto.
+Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta do projeto}/{nome do projeto}/h2-console** O usuário e a senha do banco são aqueles usados na criação do projeto e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação do projeto.
 
 ## 4. Outros Recursos e Observações
 
