@@ -138,7 +138,7 @@ Como ainda existem diversos pontos a serem melhorados, um deles é a persistênc
 
 ### 3.2. Testando os Serviços
 
-Uma vez com a aplicação rodando é as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
+Uma vez com a API rodando e as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
 
 * GET /**{nome da API}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
 
