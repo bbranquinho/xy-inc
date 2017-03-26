@@ -1,6 +1,6 @@
 # xy-inc-api
 
-Este projeto é responsável por realizar a criação de uma aplicação que disponibiliza serviços REST. OS serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
+Este projeto é responsável por criar APIs/Aplicações REST. Os serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
 
 O projeto criado é composto por um grupo de tecnologias, escolhidas com o objetivo de permitir futuras evoluções da aplicação.
 
