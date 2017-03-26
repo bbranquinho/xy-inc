@@ -9,8 +9,10 @@ O projeto criado é composto por um grupo de tecnologias, escolhidas com o objet
 Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
-    2. Kotlin 1.1
-    3. Gradle (recomendada e testada: versão 2.14.1)
+    2. Kotlin 1.1 (opcional)
+    3. Gradle (versão 2.14.1 - recomendada/testada)
+
+Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([Thank You Jetbrains](https://www.jetbrains.com/idea/)) para realizar desenvolvimentos no projeto.
 
 ## 2. Executando o Projeto
 
@@ -18,7 +20,7 @@ Após baixar o projeto, para executá-lo é necessário rodar os seguintes coman
 
 ```sh
 $ gradle clean build
-$ java -jar build/libs/xy-inc-0.0.1-SNAPSHOT.jar
+$ java -jar xy-inc-factory/build/libs/xy-inc-factory-0.0.1-SNAPSHOT.war
 ```
 
 A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (xy-inc-0.0.1-SNAPSHOT.war) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
@@ -29,17 +31,17 @@ Para realizar a criação de um novo projeto é necessário especificar alguns p
 
 * ***name***: Nome do projeto.
     * *Exemplo*: **xy-inc**
-* ***basePackage***: Nome do pacote que será usado como base para a criação do projeto. Exemplo: br.com.xy.inc
+* ***basePackage***: Nome do pacote que será usado como base para a criação do projeto.
     * *Exemplo*: **br.com.xy.inc**
-* ***group***: Como o projeto gerado é em java, é preciso estabelecer o nome do groupId. Em caso de dúvidas, utilize o mesmo valor usado no basePackage.
+* ***group***: É preciso estabelecer o nome do groupId, sendop este um identificador dos projetos. Em caso de dúvida, utilize o mesmo valor usado no **basePackage**.
     * *Exemplo*: **br.com.xy.inc**
-* ***databaseName***: Nome que ficará o banco de dados.
+* ***databaseName***: Nome do banco de dados. O banco de dados é criado dinamicamente toda a versão que novos elementos são criados no projeto ou quando a aplicação reinicia.
     * *Exemplo*: **xy_inc**
 * ***databaseUsername***: Nome de usuário do banco de dados.
     * *Exemplo*: **root**
 * ***databasePassword***: Senha que ficará o banco de dados.
     * *Exemplo*: **root**
-* ***port***: Porta em que a aplicação será iniciada.
+* ***port***: Porta em que a aplicação será iniciada. Por padrão é recomentada a porta 8080 ou outras portas que não estão em uso.
     * *Exemplo*: **8080**
 * ***version***: Versão do projeto.
     * *Exemplo*: **0.0.1-SNAPSHOT**
@@ -48,18 +50,29 @@ De posse destes dados é necessário realizar uma chamada POST ao serviço **htt
 
 ```sh
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
+   "name": "xy-inc", \ 
    "basePackage": "br.com.xy.inc", \ 
+   "group": "br.com.xy.inc", \ 
    "databaseName": "xy_inc", \  
    "databaseUsername": "root", \
    "databasePassword": "root", \ 
-   "group": "br.com.xy.inc", \ 
-   "name": "xy-inc", \ 
    "port": 8080, \ 
    "version": "0.0.1-SNAPSHOT" \ 
  }' 'http://localhost:9000/xy-inc/api/project'
 ```
 
-Para criar a entidade.
+Após a criação do projeto, podem ser criadas entidades. Estas entidades são compostas pelos seguintes parâmetros:
+
+* ***projectName***: Nome do projeto. Este nome faz referência ao projeto que já foi criado anteriormente.
+    * *Exemplo*: **xy-inc**
+* ***name***: Nome da entidade.
+    * *Exemplo*: **product**
+* ***fields***: Propriedade da entidade.
+    * **name**: Nome da propriedade.
+    * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
+    * *Exemplo*: **"name": "description", "type": "STRING"**
+
+A partir do atributos da entidade, é realizada sua criação com a chamado POST do serviço **http://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
 
 ```sh
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
@@ -88,6 +101,8 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
    } \ 
  }' 'http://localhost:9000/xy-inc/api/model'
  ```
+
+Após a criação de novos projetos eles começam automaticamente a serem executados. 
 
 ## 3. Testando os serviços
 
