@@ -1,6 +1,8 @@
 # xy-inc-api
 
-Este projeto conta com uma aplicação REST com serviços de CRUD para uma entidade chamada **Product**.
+Este projeto é responsável por realizar a criação de uma aplicação que disponibiliza serviços REST. OS serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
+
+O projeto criado é composto por um grupo de tecnologias, escolhidas com o objetivo de permitir futuras evoluções da aplicação.
 
 ## 1. Requisitos e Configurações
 
@@ -8,9 +10,7 @@ Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
     2. Kotlin 1.1
-    3. Gradle 2.14.1
-
-O projeto utiliza um banco embarcado (H2) para desenvolvimento e para produção está configurado inicialmente o MySQL, apesar de que outros bancos podem ser configurados facilmente.
+    3. Gradle (recomendada e testada: versão 2.14.1)
 
 ## 2. Executando o Projeto
 
@@ -22,6 +22,72 @@ $ java -jar build/libs/xy-inc-0.0.1-SNAPSHOT.jar
 ```
 
 A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (xy-inc-0.0.1-SNAPSHOT.war) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
+
+## 3. Criando um novo Projeto
+
+Para realizar a criação de um novo projeto é necessário especificar alguns parâmetros, sendo eles:
+
+* ***name***: Nome do projeto.
+    * *Exemplo*: **xy-inc**
+* ***basePackage***: Nome do pacote que será usado como base para a criação do projeto. Exemplo: br.com.xy.inc
+    * *Exemplo*: **br.com.xy.inc**
+* ***group***: Como o projeto gerado é em java, é preciso estabelecer o nome do groupId. Em caso de dúvidas, utilize o mesmo valor usado no basePackage.
+    * *Exemplo*: **br.com.xy.inc**
+* ***databaseName***: Nome que ficará o banco de dados.
+    * *Exemplo*: **xy_inc**
+* ***databaseUsername***: Nome de usuário do banco de dados.
+    * *Exemplo*: **root**
+* ***databasePassword***: Senha que ficará o banco de dados.
+    * *Exemplo*: **root**
+* ***port***: Porta em que a aplicação será iniciada.
+    * *Exemplo*: **8080**
+* ***version***: Versão do projeto.
+    * *Exemplo*: **0.0.1-SNAPSHOT**
+
+De posse destes dados é necessário realizar uma chamada POST ao serviço **http://localhost:9000/xy-inc/api/project**, como mostrado a seguir:
+
+```sh
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
+   "basePackage": "br.com.xy.inc", \ 
+   "databaseName": "xy_inc", \  
+   "databaseUsername": "root", \
+   "databasePassword": "root", \ 
+   "group": "br.com.xy.inc", \ 
+   "name": "xy-inc", \ 
+   "port": 8080, \ 
+   "version": "0.0.1-SNAPSHOT" \ 
+ }' 'http://localhost:9000/xy-inc/api/project'
+```
+
+Para criar a entidade.
+
+```sh
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
+   "projectName": "xy-inc", \ 
+   "entity": { \ 
+     "name": "product", \ 
+     "tableName": "tb_product", \ 
+     "fields": [ \ 
+       { \ 
+         "name": "name", \ 
+         "type": "STRING" \ 
+       }, \ 
+      { \ 
+         "name": "description", \ 
+         "type": "STRING" \ 
+       }, \ 
+      { \ 
+         "name": "price", \ 
+         "type": "DECIMAL" \ 
+       }, \ 
+      { \ 
+         "name": "category", \ 
+         "type": "STRING" \ 
+       } \ 
+     ] \ 
+   } \ 
+ }' 'http://localhost:9000/xy-inc/api/model'
+ ```
 
 ## 3. Testando os serviços
 

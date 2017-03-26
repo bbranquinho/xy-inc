@@ -32,3 +32,5 @@ gradlew.bat
 # Project Specific
 ######################
 build/
+projects/
+
