@@ -59,8 +59,6 @@ $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: appli
  }' 'http://localhost:9000/xy-inc/api/project'
 ```
 
-Toda a API criada fica disponível na pasta ***projects***.
-
 Após a criação da API, podem ser criadas entidades. Estas entidades são compostas pelos seguintes parâmetros:
 
 * ***projectName***: Nome da API. Este nome faz referência a API que já foi criada anteriormente.
@@ -184,7 +182,9 @@ Para cada API existe uma interface Swagger com as informações dos serviços di
 
 Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
 
-## 4. Outros Recursos e Observações
+## 4. Observações
+
+Para cada API é criado um projeto, sendo este colocado na pasta ***{local do projeto xy-inc-api}/projects***.
 
 Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **http://localhost:9000/xy-inc/swagger-ui.html**
 
