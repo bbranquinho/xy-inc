@@ -10,7 +10,7 @@ Para executar o projeto é necessária a instalação das seguintes ferramentas:
     2. Kotlin 1.1 (opcional)
     3. Gradle (versão 2.14.1 - recomendada/testada)
 
-Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([Thank You Jetbrains](https://www.jetbrains.com/idea/)) para realizar desenvolvimentos no projeto.
+Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([Thank You Jetbrains](https://www.jetbrains.com/idea/)) para realizar novos desenvolvimentos.
 
 ## 2. Executando o Projeto
 
