@@ -14,7 +14,7 @@ Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE In
 
 ## 2. Executando o Projeto
 
-Após baixar o projeto, para executá-lo é necessário rodar os seguintes comandos dentro da pasta raiz.
+Após baixar o projeto, para executá-lo é necessário rodar os seguintes comandos dentro da pasta raiz (***xy-inc-api***).
 
 ```sh
 $ gradle clean build
