@@ -36,7 +36,7 @@ open class ApiBuilderImpl : ApiBuilder {
     }
 
     override fun createEntity(projectName: String, entity: EntityBean) {
-        val  project = mapper.readValue(File(applicationProperties.projectPath + "/" + projectName), ProjectBean::class.java)
+        val  project = mapper.readValue(File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json"), ProjectBean::class.java)
 
         createEntity(project, entity)
     }

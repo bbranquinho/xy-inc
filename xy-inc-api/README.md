@@ -47,16 +47,7 @@ Para realizar a criação de uma nova API é necessário especificar alguns par�
 De posse destes dados é necessário realizar uma chamada POST ao serviço **ht<span>tp://localhost:9000/xy-inc/api/project**, como mostrado a seguir:
 
 ```sh
-$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
-   "name": "mobile-api", \ 
-   "basePackage": "br.com.mobile.api", \ 
-   "group": "br.com.mobile.api", \ 
-   "databaseName": "mobile_api", \  
-   "databaseUsername": "root", \
-   "databasePassword": "root", \ 
-   "port": 8080, \ 
-   "version": "0.0.1-SNAPSHOT" \ 
- }' 'http://localhost:9000/xy-inc/api/project'
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name":"mobile-api", "basePackage":"br.com.mobile.api", "group":"br.com.mobile.api", "databaseName":"mobile_api", "databaseUsername":"root", "databasePassword":"root", "port":8080, "version":"0.0.1-SNAPSHOT" }' 'http://localhost:9000/xy-inc/api/project'
 ```
 
 Após a criação da API, podem ser criadas entidades. Estas entidades são compostas pelos seguintes parâmetros:
@@ -73,32 +64,8 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
 A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
 
 ```sh
-$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
-   "projectName": "mobile-api", \ 
-   "entity": { \ 
-     "name": "product", \ 
-     "tableName": "tb_product", \ 
-     "fields": [ \ 
-       { \ 
-         "name": "name", \ 
-         "type": "STRING" \ 
-       }, \ 
-      { \ 
-         "name": "description", \ 
-         "type": "STRING" \ 
-       }, \ 
-      { \ 
-         "name": "price", \ 
-         "type": "DECIMAL" \ 
-       }, \ 
-      { \ 
-         "name": "category", \ 
-         "type": "STRING" \ 
-       } \ 
-     ] \ 
-   } \ 
- }' 'http://localhost:9000/xy-inc/api/model'
- ```
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "projectName":"mobile-api", "entity": { "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] } }' 'http://localhost:9000/xy-inc/api/model'
+```
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
 
@@ -188,4 +155,4 @@ Para cada API é criado um projeto, sendo este colocado na pasta ***{local do pr
 
 Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
 
-Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos, tanto a nível de arquitetura, requisitos, deploy e testes. Foram criados testes unitários para alguns pontos da API, contudo, outros testes podem ser desenvolvidos futuramente.
+Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos, tanto a nível de arquitetura, requisitos, deploy, validações e testes. Foram criados testes unitários para alguns pontos da API, contudo, outros testes podem ser desenvolvidos futuramente. Um ponto muito importante que precisa ser realizado em trabalhos futuros é a validação dos parâmetros dos serviços.
