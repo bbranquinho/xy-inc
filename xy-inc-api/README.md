@@ -128,20 +128,29 @@ $ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "des
 * PUT /**{nome da API}**/api/**{entidade}** - Edita o registro de uma entidade.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X PUT -d '{"id":3, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/mobile-api/api/product
+$ curl -H "Content-Type: application/json" -X PUT -d '{"id":1, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/mobile-api/api/product
 ```
 
 * DELETE /**{nome da API}**/api/**{entidade}**/**{id}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobile-api/api/product/3
+$ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobile-api/api/product/1
 ```
 
 * DELETE /**{nome da API}**/api/**{entidade}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
-$ curl -H "Content-Type: application/json" -X DELETE -d '{"id":3}' http://localhost:8080/mobile-api/api/product
+$ curl -H "Content-Type: application/json" -X DELETE -d '{"id":1}' http://localhost:8080/mobile-api/api/product
 ```
+
+Para cada API é criado um projeto, sendo este colocado na pasta ***{local do projeto xy-inc-api}/projects***. Se necessário este projeto pode ser rodado sem a dependência do projeto de criação de APIs (**xy-inc-api**). Para isso é necessário apenas executar os seguintes comandos na pasta do projeto ***{local do projeto xy-inc-api}/projects/{nome da API}***:
+
+```sh
+$ gradle clean build
+$ java -jar build/libs/mobile-api-0.0.1-SNAPSHOT.war
+```
+
+Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas. Apesar de rodar com um servidor de aplicação embarcado, a API também pode ser colocada no JBoss EAP 7.0 ou Wildfly 10.
 
 ### 3.3. Outros Recursos
 
@@ -150,8 +159,6 @@ Para cada API existe uma interface Swagger com as informações dos serviços di
 Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
 
 ## 4. Observações
-
-Para cada API é criado um projeto, sendo este colocado na pasta ***{local do projeto xy-inc-api}/projects***.
 
 Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
 
