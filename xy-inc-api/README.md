@@ -33,7 +33,7 @@ Para realizar a criação de uma nova API/projeto é necessário especificar alg
     * *Exemplo*: **br.com.mobile.api**
 * ***group***: É preciso estabelecer o nome do groupId, sendo este um identificador dos projetos. Em caso de dúvida, utilize o mesmo valor usado no **basePackage**.
     * *Exemplo*: **br.com.mobile.api**
-* ***databaseName***: Nome do banco de dados. O banco de dados é criado dinamicamente toda a versão que novos elementos são criados no projeto ou quando a aplicação reinicia.
+* ***databaseName***: Nome do banco de dados. O banco de dados é criado dinamicamente toda vez que novos elementos são criados no projeto ou quando a aplicação reinicia.
     * *Exemplo*: **mobile_api**
 * ***databaseUsername***: Nome de usuário do banco de dados.
     * *Exemplo*: **root**
