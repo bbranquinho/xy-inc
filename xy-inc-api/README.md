@@ -44,7 +44,7 @@ Para realizar a criação de uma nova API é necessário especificar alguns par�
 * ***version***: Versão da API.
     * *Exemplo*: **0.0.1-SNAPSHOT**
 
-De posse destes dados é necessário realizar uma chamada POST ao serviço **http://localhost:9000/xy-inc/api/project**, como mostrado a seguir:
+De posse destes dados é necessário realizar uma chamada POST ao serviço **ht<span>tp://localhost:9000/xy-inc/api/project**, como mostrado a seguir:
 
 ```sh
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
@@ -70,7 +70,7 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
     * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
     * *Exemplo*: **"name": "description", "type": "STRING"**
 
-A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **http://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
+A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
 
 ```sh
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
@@ -104,25 +104,25 @@ Para toda entidade criada é atribuída uma propriedade **id**, responsável por
 
 Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e das entidades, conforme listado a seguir:
 
-* GET **http://localhost:9000/xy-inc/api/project** - Lista todos as APIs.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project** - Lista todas as APIs.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project'
 ```
 
-* GET **http://localhost:9000/xy-inc/api/project/{nome da API}** - Busca os dados de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}** - Busca os dados de uma API.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api'
 ```
 
-* GET **http://localhost:9000/xy-inc/api/project/{nome da API}/entities** - Lista as entidades de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/entities** - Lista as entidades de uma API.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/entities'
 ```
 
-* GET **http://localhost:9000/xy-inc/api/project/{nome da API}/entities/{nome da entidade}** - Busca informações de uma entidade de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/entities/{nome da entidade}** - Busca informações de uma entidade de uma API.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/entities/product'
@@ -186,6 +186,6 @@ Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost
 
 Para cada API é criado um projeto, sendo este colocado na pasta ***{local do projeto xy-inc-api}/projects***.
 
-Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **http://localhost:9000/xy-inc/swagger-ui.html**
+Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
 
 Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos, tanto a nível de arquitetura, requisitos, deploy e testes. Foram criados testes unitários para alguns pontos da API, contudo, outros testes podem ser desenvolvidos futuramente.
