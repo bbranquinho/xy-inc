@@ -39,13 +39,14 @@ open class ApiManagerImpl: ApiManager {
             return false
         }
 
-        // TODO - FIX augusto.branquinho: Control the concurrency.
         if (apiCache.get(projectName) == null) {
             val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(project.name) })
 
             apiCache.put(project.name, apiRunnable);
 
-            Thread(apiRunnable).start()
+            apiRunnable.thread = Thread(apiRunnable)
+
+            apiRunnable.start()
 
             return true
         } else {
@@ -61,7 +62,13 @@ open class ApiManagerImpl: ApiManager {
             return null
         }
 
-        return restTemplate.postForEntity("http://localhost:" + project.port + "/" + project.name + "/shutdown", {}, StopResponseBean::class.java).body
+        apiCache.remove(projectName)?.stop()
+
+        try {
+            return restTemplate.postForEntity("http://localhost:" + project.port + "/" + project.name + "/shutdown", {}, StopResponseBean::class.java).body
+        } catch (e: Exception) {
+            return null
+        }
     }
 
     override fun getLogStatusApi(projectName: String): List<String>? {
@@ -80,9 +87,11 @@ open class ApiManagerImpl: ApiManager {
 
         val logQueue = ConcurrentLinkedQueue<String>()
 
+        var thread: Thread? = null
+
         override fun run() {
             val projectDir = System.getProperty("user.dir")
-            var script: String = ""
+            var script: String
             val apiDir = projectDir + "/projects/" + project.name
             val warDir = "build/libs/" + project.name + "-" + project.version + ".war"
 
@@ -104,6 +113,8 @@ open class ApiManagerImpl: ApiManager {
                 while (line != null) {
                     logQueue.add(line)
 
+                    logger.debug("API: [%s] output [%s]".format(project.name, line))
+
                     while ((maxQueueSize != null) && (logQueue.size > maxQueueSize!!)) {
                         logQueue.poll()
                     }
@@ -124,7 +135,13 @@ open class ApiManagerImpl: ApiManager {
             onFinish()
         }
 
-        open fun getLog() = logQueue.toList()
+        fun getLog() = logQueue.toList()
+        
+        // Stop a thread not is a good practice, but in this case we have to do it.
+        @Suppress("DEPRECATION")
+        fun stop() = thread?.stop()
+
+        fun start() = thread?.start()
 
         fun formatError(proc: Process): String {
             val input = BufferedReader(InputStreamReader(proc.getErrorStream()))

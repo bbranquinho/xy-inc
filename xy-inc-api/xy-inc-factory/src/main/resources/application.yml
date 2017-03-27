@@ -13,3 +13,5 @@ app:
   api:
     log:
       size: 50
+    start:
+      automatically: true

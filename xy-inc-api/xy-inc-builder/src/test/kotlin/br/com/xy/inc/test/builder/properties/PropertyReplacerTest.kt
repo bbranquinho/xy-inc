@@ -52,6 +52,8 @@ open class ProductEntity : BaseEntity<Long>() {
 
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
         properties.add(PairProperty("entitySimpleName", "product"))
+        properties.add(PairProperty("entityName", "ProductEntity"))
+        properties.add(PairProperty("resourceName", "ProductResource"))
 
         val fileText = propertyReplacer.replaceProperties(properties, "/templates/entity/Resource.xyi")
 

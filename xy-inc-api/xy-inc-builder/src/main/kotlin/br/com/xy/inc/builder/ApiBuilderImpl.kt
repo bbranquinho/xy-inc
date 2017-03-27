@@ -49,13 +49,15 @@ open class ApiBuilderImpl : ApiBuilder {
         val projectFilePath = File(applicationProperties.projectPath)
         val projects = ArrayList<ProjectBean>()
 
-        projectFilePath.listFiles{ f -> f.isDirectory }.forEach {
-            val project = File(it.absolutePath + "/.xyi/project.json")
+        if (projectFilePath.exists()) {
+            projectFilePath.listFiles { f -> f.isDirectory }.forEach {
+                val project = File(it.absolutePath + "/.xyi/project.json")
 
-            if (project.exists() && project.isFile()) {
-                projects.add(mapper.readValue(project, ProjectBean::class.java))
-            } else {
-                logger.error("Project not found [%s]".format(project.absolutePath))
+                if (project.exists() && project.isFile()) {
+                    projects.add(mapper.readValue(project, ProjectBean::class.java))
+                } else {
+                    logger.error("Project not found [%s]".format(project.absolutePath))
+                }
             }
         }
 
@@ -155,7 +157,8 @@ open class ApiBuilderImpl : ApiBuilder {
                 PairProperty("packageName", project.basePackage),
                 PairProperty("entitySimpleName", entitySimpleName.toLowerCase()),
                 PairProperty("keyName", "id"),
-                PairProperty("repositoryName", entitySimpleName + "Repository")
+                PairProperty("repositoryName", entitySimpleName + "Repository"),
+                PairProperty("resourceName", entitySimpleName + "Resource")
         )
 
         saveCode(entityProperties, "/templates/entity/Entity.xyi", entityFolder, entitySimpleName + "Entity.kt")
