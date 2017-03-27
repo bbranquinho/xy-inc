@@ -69,6 +69,16 @@ $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: appli
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
 
+### 3.1. Especificações das APIs
+
+Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
+
+Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
+
+Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados com o [Flyway](https://flywaydb.org/) ou [Liquibase](http://www.liquibase.org/). Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
+
+## 4. Gerenciamento das APIs
+
 Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e das entidades.  A seguir são mostrados estes serviços e exemplos de chamadas.
 
 * GET **ht<span>tp://localhost:9000/xy-inc/api/project** - Lista todas as APIs.
@@ -121,15 +131,7 @@ $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc
 $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
 ```
 
-### 3.1. Especificações das APIs
-
-Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
-
-Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
-
-Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados com o [Flyway](https://flywaydb.org/) ou [Liquibase](http://www.liquibase.org/). Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
-
-### 3.2. Testando os Serviços
+## 5. Testando os Serviços
 
 Uma vez com a API rodando e as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
 
@@ -190,13 +192,13 @@ $ java -jar build/libs/mobile-api-0.0.1-SNAPSHOT.war
 
 Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas. Apesar de rodar com um servidor de aplicação embarcado, a API também pode ser colocada no JBoss EAP 7.0 ou Wildfly 10.
 
-### 3.3. Outros Recursos
+### 5.1. Outros Recursos
 
 Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
 
 Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
 
-## 4. Observações
+## 6. Observações
 
 Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
 
