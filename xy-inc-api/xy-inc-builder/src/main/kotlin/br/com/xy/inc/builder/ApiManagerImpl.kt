@@ -62,13 +62,17 @@ open class ApiManagerImpl: ApiManager {
             return null
         }
 
-        apiCache.remove(projectName)?.stop()
+        var shutdownResponse: StopResponseBean? = null
 
         try {
-            return restTemplate.postForEntity("http://localhost:" + project.port + "/" + project.name + "/shutdown", {}, StopResponseBean::class.java).body
+            shutdownResponse = restTemplate.postForEntity("http://localhost:" + project.port + "/" + project.name + "/shutdown", {}, StopResponseBean::class.java).body
         } catch (e: Exception) {
-            return null
+            logger.debug(e.message)
         }
+
+        apiCache.remove(projectName)?.stop()
+
+        return shutdownResponse
     }
 
     override fun getLogStatusApi(projectName: String): List<String>? {

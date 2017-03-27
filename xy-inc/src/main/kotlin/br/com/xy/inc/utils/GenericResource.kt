@@ -33,7 +33,7 @@ abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
         }
 
         val searchDirection = Direction.fromStringOrNull(direction)
-        val searchFields = fields?.trim()?.split("\\.|,")?.filter { !it.isEmpty() }
+        val searchFields = fields?.trim()?.split(",")?.filter { !it.isEmpty() }
 
         var pageRequest: PageRequest
 
