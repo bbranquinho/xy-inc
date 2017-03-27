@@ -145,7 +145,7 @@ $ curl http://localhost:8080/mobile-api/api/product
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10
 ```
 
-* GET /**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos da entidade}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos da entidade separado por vírculo) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+* GET /**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos da entidade}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos da entidade separados por vírgula) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10&direction=DESC&fields=name,description
