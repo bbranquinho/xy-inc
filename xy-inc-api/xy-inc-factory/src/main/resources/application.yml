@@ -10,3 +10,6 @@ server:
 app:
   project:
     path: projects
+  api:
+    log:
+      size: 50

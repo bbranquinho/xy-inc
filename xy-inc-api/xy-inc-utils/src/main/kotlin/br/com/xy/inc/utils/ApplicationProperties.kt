@@ -9,4 +9,7 @@ open class ApplicationProperties {
     @Value("\${app.project.path}")
     var projectPath: String? = null
 
+    @Value("\${app.api.log.size:#{null}}")
+    var apiLogSize: Int? = null
+
 }

@@ -17,10 +17,10 @@ interface ApiBuilder {
 
     fun getEntitiyByProject(projectName: String, entityName: String): EntityBean?
 
-    fun createProject(projectTemplate: ProjectBean)
+    fun createProject(project: ProjectBean)
 
     fun createEntity(projectName: String, entity: EntityBean)
 
-    fun createEntity(projectTemplate: ProjectBean, entity: EntityBean)
+    fun createEntity(project: ProjectBean, entity: EntityBean)
 
 }

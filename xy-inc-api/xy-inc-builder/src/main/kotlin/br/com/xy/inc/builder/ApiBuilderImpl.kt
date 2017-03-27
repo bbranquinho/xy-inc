@@ -4,6 +4,7 @@ import br.com.xy.inc.builder.properties.PairProperty
 import br.com.xy.inc.builder.utils.PropertyReplacer
 import br.com.xy.inc.utils.ApplicationProperties
 import br.com.xy.inc.utils.builder.ApiBuilder
+import br.com.xy.inc.utils.builder.ApiManager
 import br.com.xy.inc.utils.template.EntityBean
 import br.com.xy.inc.utils.template.ProjectBean
 import br.com.xy.inc.utils.template.TypeFieldBean
@@ -26,6 +27,9 @@ open class ApiBuilderImpl : ApiBuilder {
 
     @Autowired
     lateinit var mapper: ObjectMapper
+
+    @Autowired
+    lateinit var apiManager: ApiManager
 
     override fun isProjectExists(projectName: String): Boolean {
         return File(applicationProperties.projectPath + "/" + projectName).exists()
@@ -93,7 +97,7 @@ open class ApiBuilderImpl : ApiBuilder {
         return entities
     }
 
-    override fun createProject(projectTemplate: ProjectBean) {
+    override fun createProject(project: ProjectBean) {
         val file = File(applicationProperties.projectPath)
 
         if (!file.exists()) {
@@ -101,7 +105,7 @@ open class ApiBuilderImpl : ApiBuilder {
             file.mkdir()
         }
 
-        val projectFilePath = File(applicationProperties.projectPath + "/" + projectTemplate.name)
+        val projectFilePath = File(applicationProperties.projectPath + "/" + project.name)
 
         if (!projectFilePath.exists()) {
             projectFilePath.mkdir()
@@ -109,16 +113,18 @@ open class ApiBuilderImpl : ApiBuilder {
 
         logger.info("Creating the project folder [%s]".format(projectFilePath.absolutePath))
         projectFilePath.mkdir()
-        createPackafeFolders(projectFilePath, projectTemplate)
+        createPackafeFolders(projectFilePath, project)
 
-        saveProperties(projectTemplate, "project.json", projectFilePath)
+        saveProperties(project, "project.json", projectFilePath)
+
+        apiManager.startApi(project.name)
     }
 
-    override fun createEntity(projectTemplate: ProjectBean, entity: EntityBean) {
-        val projectFilePath = File(applicationProperties.projectPath + "/" + projectTemplate.name)
+    override fun createEntity(project: ProjectBean, entity: EntityBean) {
+        val projectFilePath = File(applicationProperties.projectPath + "/" + project.name)
 
         if (!projectFilePath.exists()) {
-            throw Exception("Project must exist [%s]".format(projectTemplate.name))
+            throw Exception("Project must exist [%s]".format(project.name))
         }
 
         var fieldsCode = ""
@@ -136,7 +142,7 @@ open class ApiBuilderImpl : ApiBuilder {
             fieldsCode += "\n" + propertyReplacer.replaceFieldProperties(fieldProperties, "/templates/entity/Field.xyi") + "\n"
         }
 
-        val entityFolder = projectFilePath.absolutePath + "/src/main/kotlin/" + projectTemplate.basePackage.replace(".", "/") + "/" + entity.name
+        val entityFolder = projectFilePath.absolutePath + "/src/main/kotlin/" + project.basePackage.replace(".", "/") + "/" + entity.name
         val entitySimpleName = entity.name[0].toUpperCase() + entity.name.substring(1)
 
         val entityProperties = arrayListOf<PairProperty>(
@@ -144,7 +150,7 @@ open class ApiBuilderImpl : ApiBuilder {
                 PairProperty("entityName", entitySimpleName + "Entity"),
                 PairProperty("keyType", TypeFieldBean.LONG.type),
                 PairProperty("field", fieldsCode),
-                PairProperty("packageName", projectTemplate.basePackage),
+                PairProperty("packageName", project.basePackage),
                 PairProperty("entitySimpleName", entitySimpleName.toLowerCase()),
                 PairProperty("keyName", "id"),
                 PairProperty("repositoryName", entitySimpleName + "Repository")
@@ -155,6 +161,9 @@ open class ApiBuilderImpl : ApiBuilder {
         saveCode(entityProperties, "/templates/entity/Resource.xyi", entityFolder, entitySimpleName + "Resource.kt")
 
         saveProperties(entity, entity.name + ".json", projectFilePath)
+
+        apiManager.stopApi(project.name)
+        apiManager.startApi(project.name)
     }
 
     private fun createPackafeFolders(projectFilePath: File, project: ProjectBean) {
@@ -206,7 +215,7 @@ open class ApiBuilderImpl : ApiBuilder {
         codeFile.writeText(code)
     }
 
-    private fun saveProperties(projectTemplate: Any, filename: String, projectFilePath: File) {
+    private fun saveProperties(project: Any, filename: String, projectFilePath: File) {
         val xyiFolder = File(projectFilePath.absolutePath + "/.xyi")
 
         if (!xyiFolder.exists()) {
@@ -215,7 +224,7 @@ open class ApiBuilderImpl : ApiBuilder {
 
         val xyiProjectFile = File(xyiFolder.absolutePath + "/" + filename.toLowerCase())
 
-        mapper.writerWithDefaultPrettyPrinter().writeValue(xyiProjectFile, projectTemplate)
+        mapper.writerWithDefaultPrettyPrinter().writeValue(xyiProjectFile, project)
     }
 
 }

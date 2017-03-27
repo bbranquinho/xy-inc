@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
+import org.springframework.web.client.RestTemplate
 
 @Configuration
 @Import(UtilsConfig::class)
@@ -13,8 +14,9 @@ import org.springframework.context.annotation.Import
 open class BuilderConfig {
 
     @Bean
-    open fun getMapper(): ObjectMapper {
-        return ObjectMapper()
-    }
+    open fun getMapper() = ObjectMapper()
+
+    @Bean
+    open fun getRestTemplate() = RestTemplate()
 
 }

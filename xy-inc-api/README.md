@@ -61,15 +61,15 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
     * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
     * *Exemplo*: **"name": "description", "type": "STRING"**
 
-A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/model**, como mostrado a seguir:
+A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
 
 ```sh
-$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "projectName":"mobile-api", "entity": { "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] } }' 'http://localhost:9000/xy-inc/api/model'
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "projectName":"mobile-api", "entity": { "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] } }' 'http://localhost:9000/xy-inc/api/project/model'
 ```
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
 
-Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e das entidades, conforme listado a seguir:
+Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e das entidades.  A seguir são mostrados estes serviços e exemplos de chamadas.
 
 * GET **ht<span>tp://localhost:9000/xy-inc/api/project** - Lista todas as APIs.
 
@@ -95,11 +95,37 @@ $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/entities/product'
 ```
 
+Para gerenciar a API foram criados serviços responsáveis por iniciar, parar, reiniciar e monitorar a API. A seguir são mostrados estes serviços e exemplos de chamadas.
+
+* POST **ht<span>tp://localhost:9000/xy-inc/api/manager/start/{nome da API}** - Inicia a execução da API.
+
+```sh
+$ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/start/mobile-api'
+```
+
+* POST **ht<span>tp://localhost:9000/xy-inc/api/manager/stop/{nome da API}** - Para a execução da API.
+
+```sh
+$ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/stop/mobile-api'
+```
+
+* POST **ht<span>tp://localhost:9000/xy-inc/api/manager/restart/{nome da API}** - Reinicia a execução da API.
+
+```sh
+$ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/restart/mobile-api'
+```
+
+* GET **ht<span>tp://localhost:9000/xy-inc/api/manager/log/{nome da API}** - Recupera parte do log da API.
+
+```sh
+$ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
+```
+
 ### 3.1. Especificações das APIs
 
-Toda vez que APIs ou entidades são criadas, alguns eventos ocorrem na aplicação (API).
+Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
 
-Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada. 
+Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
 
 Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados com o [Flyway](https://flywaydb.org/) ou [Liquibase](http://www.liquibase.org/). Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
 
