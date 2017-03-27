@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = arrayOf("/api/product"))
 open class ProductResource : GenericResource<ProductEntity, Long>() {
 
+    override fun getBaseUrl() = "/api/product"
+
 }

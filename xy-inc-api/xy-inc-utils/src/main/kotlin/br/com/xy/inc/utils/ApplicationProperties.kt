@@ -12,4 +12,7 @@ open class ApplicationProperties {
     @Value("\${app.api.log.size:#{null}}")
     var apiLogSize: Int? = null
 
+    @Value("\${app.api.start.automatically:#{false}}")
+    var isStartApiAutomatically: Boolean = false
+
 }

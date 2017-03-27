@@ -117,7 +117,9 @@ open class ApiBuilderImpl : ApiBuilder {
 
         saveProperties(project, "project.json", projectFilePath)
 
-        apiManager.startApi(project.name)
+        if (applicationProperties.isStartApiAutomatically) {
+            apiManager.startApi(project.name)
+        }
     }
 
     override fun createEntity(project: ProjectBean, entity: EntityBean) {
@@ -162,8 +164,10 @@ open class ApiBuilderImpl : ApiBuilder {
 
         saveProperties(entity, entity.name + ".json", projectFilePath)
 
-        apiManager.stopApi(project.name)
-        apiManager.startApi(project.name)
+        if (applicationProperties.isStartApiAutomatically) {
+            apiManager.stopApi(project.name)
+            apiManager.startApi(project.name)
+        }
     }
 
     private fun createPackafeFolders(projectFilePath: File, project: ProjectBean) {
@@ -187,6 +191,7 @@ open class ApiBuilderImpl : ApiBuilder {
         saveCode(projectProperties, "/templates/project/ApplicationConfig.xyi", projectFolders + "/utils", "ApplicationConfig.kt")
         saveCode(projectProperties, "/templates/project/BaseEntity.xyi", projectFolders + "/utils", "BaseEntity.kt")
         saveCode(projectProperties, "/templates/project/GenericResource.xyi", projectFolders + "/utils", "GenericResource.kt")
+        saveCode(projectProperties, "/templates/project/PaginationUtil.xyi", projectFolders + "/utils", "PaginationUtil.kt")
 
         saveCode(projectProperties, "/templates/structure/build.gradle.xyi", projectFilePath.absolutePath, "build.gradle")
         saveCode(projectProperties, "/templates/structure/gradle.properties.xyi", projectFilePath.absolutePath, "gradle.properties")
