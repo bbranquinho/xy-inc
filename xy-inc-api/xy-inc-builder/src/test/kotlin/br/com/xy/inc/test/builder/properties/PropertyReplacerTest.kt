@@ -235,8 +235,8 @@ abstract class GenericResource<T: BaseEntity<K>, K: Serializable> {
                 .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @GetMapping(consumes = arrayOf(MediaType.ALL_VALUE))
-    fun findAll(@RequestParam("page", defaultValue = "-1") page: Int?, @RequestParam("size", defaultValue = "0") size: Int?,
-                @RequestParam("fields", defaultValue = "") fields: String?, @RequestParam("direction", defaultValue = "ASC") direction: String?)
+    fun findAll(@RequestParam("page", required = false) page: Int?, @RequestParam("size", required = false) size: Int?,
+                @RequestParam("fields", required = false) fields: String?, @RequestParam("direction", required = false) direction: String?)
             : ResponseEntity<List<T>> {
         if ((size == null) || (page == null) || (page < 0) || (size <= 0)) {
             return ResponseEntity(repository.findAll(), HttpStatus.OK)
