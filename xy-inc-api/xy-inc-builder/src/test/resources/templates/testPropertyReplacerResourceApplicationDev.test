@@ -1,0 +1,26 @@
+spring:
+  jackson:
+    serialization:
+      indent_output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:xy_inc
+    username: root
+    password: root
+  jpa:
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
+logging:
+  file: build/xy-inc.log
+  level:
+    br.com.xy.inc: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+endpoints:
+  shutdown:
+    enabled: true

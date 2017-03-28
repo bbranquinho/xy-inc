@@ -1,0 +1,2 @@
+    @Column(name = "description", unique = false, nullable = true, length = 255)
+    var description: Integer? = null

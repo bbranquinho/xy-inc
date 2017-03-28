@@ -5,6 +5,7 @@ import br.com.xy.inc.builder.utils.PropertyReplacer
 import br.com.xy.inc.test.builder.utils.BaseTest
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
+import java.io.File
 import kotlin.test.assertEquals
 
 open class PropertyReplacerFieldTest: BaseTest() {
@@ -23,9 +24,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = false, nullable = false, length = 255)
-    var description: Integer = 0""")
+        assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldInteger.test").readText())
     }
 
     @Test
@@ -39,9 +38,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = false, nullable = true, length = 255)
-    var description: Integer? = null""")
+        assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerNullableTrue.test").readText())
     }
 
     @Test
@@ -56,9 +53,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = false, nullable = false, length = 255)
-    var description: Integer = 0""")
+        assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerNullableFalse.test").readText())
     }
 
     @Test
@@ -73,9 +68,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = true, nullable = false, length = 255)
-    var description: Integer = 0""")
+        assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerUniqueTrue.test").readText())
     }
 
     @Test
@@ -90,9 +83,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = false, nullable = false, length = 255)
-    var description: Integer = 0""")
+        assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerUniqueFalse.test").readText())
     }
 
     @Test
@@ -107,9 +98,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
 
         val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/Field.xyi")
 
-        assertEquals(fileText,
-"""    @Column(name = "description", unique = false, nullable = false, length = 10)
-    var description: Integer = 0""")
+        assertEquals(fileText, File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerLength.test").readText())
     }
 
 }

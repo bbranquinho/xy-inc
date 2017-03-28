@@ -14,7 +14,6 @@ import java.io.InputStreamReader
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 
-
 @Component
 open class ApiManagerImpl: ApiManager {
 
@@ -40,6 +39,10 @@ open class ApiManagerImpl: ApiManager {
         }
 
         if (apiCache.get(projectName) == null) {
+            if (logger.isDebugEnabled) {
+                logger.debug("Starting the API [%s]".format(projectName))
+            }
+
             val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(project.name) })
 
             apiCache.put(project.name, apiRunnable);
@@ -50,11 +53,19 @@ open class ApiManagerImpl: ApiManager {
 
             return true
         } else {
+            if (logger.isDebugEnabled) {
+                logger.debug("API is running [%s]".format(projectName))
+            }
+
             return false
         }
     }
 
     override fun stopApi(projectName: String): StopResponseBean? {
+        if (logger.isDebugEnabled) {
+            logger.debug("Stopping the API [%s]".format(projectName))
+        }
+
         var project = apiBuilder.getProject(projectName)
 
         if (project == null) {
@@ -76,13 +87,7 @@ open class ApiManagerImpl: ApiManager {
     }
 
     override fun getLogStatusApi(projectName: String): List<String>? {
-        val apiRunnable = apiCache.get(projectName)
-
-        if (apiRunnable != null) {
-            return apiRunnable.getLog()
-        }
-
-        return null
+        return apiCache.get(projectName)?.getLog()
     }
 
     private class ApiRunnable(val project: ProjectBean, var maxQueueSize: Int?, val onFinish: () -> ApiRunnable?): Runnable {
@@ -98,11 +103,14 @@ open class ApiManagerImpl: ApiManager {
             var script: String
             val apiDir = projectDir + "/projects/" + project.name
             val warDir = "build/libs/" + project.name + "-" + project.version + ".war"
+            val os = System.getProperty("os.name").toLowerCase()
 
-            when(System.getProperty("os.name").toLowerCase()) {
-                "linux", "mac os x" -> { script = projectDir + "/start_api.sh" }
-                "win" -> { script = projectDir + "/start_api.bat" }
-                else -> throw Exception("OS [%s] not supported yet.".format(System.getProperty("os.name")))
+            if (os.startsWith("linux") || os.startsWith("mac")) {
+                script = projectDir + "/start_api.sh"
+            } else if (os.startsWith("win")) {
+                script = projectDir + "/start_api.bat"
+            } else {
+                throw Exception("OS [%s] not supported yet.".format(os))
             }
 
             try {
@@ -111,7 +119,6 @@ open class ApiManagerImpl: ApiManager {
                 logger.info("API: [%s] started".format(project.name))
 
                 val input = BufferedReader(InputStreamReader(process.getInputStream()))
-
                 var line = input.readLine()
 
                 while (line != null) {

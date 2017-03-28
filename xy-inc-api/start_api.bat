@@ -1,3 +1,3 @@
 cd %1
-gradle clean build
-java -jar %2
+call gradle clean build
+call java -jar %2
