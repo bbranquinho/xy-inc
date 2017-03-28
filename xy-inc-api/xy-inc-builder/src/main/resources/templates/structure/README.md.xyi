@@ -29,6 +29,8 @@ Uma vez com a aplicação rodando é necessário apenas realizar a chamada dos s
 
 * GET ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Lista todos os registros da entidade.
 
+* GET ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}**?size=**{tamanho da página}**&page=**{número da página}**&direction=**{direção da ordenação, sendo ASC ou DESC}**&fields=**{campos usados para ordenação}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação, sendo ASC ou DESC)(fields = lista de campos da entidade separados por vírgula) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+
 * GET ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}**/{id}** - Busca a entidade por id.
 
 * POST ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Cria um novo registro para a entidade. No corpo da requisição deve ser enviado os dados da entidade em JSON.
