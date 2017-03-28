@@ -1,1 +1,54 @@
 # @projectName@
+
+Este projeto conta com uma aplicação REST com serviços de CRUD.
+
+## 1. Requisitos e Configurações
+
+Para executar o projeto é necessária a instalação das seguintes ferramentas:
+
+    1. JDK 1.8
+    2. Kotlin 1.1 (opcional)
+    3. Gradle 2.14.1
+
+O projeto utiliza um banco embarcado (H2) para desenvolvimento, apesar de que outros bancos podem ser configurados facilmente.
+
+## 2. Executando o Projeto
+
+Após baixar o projeto, para executá-lo é necessário rodar os seguintes comandos dentro da pasta raiz.
+
+```sh
+$ gradle clean build
+$ java -jar build/libs/@projectName@.jar
+```
+
+A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
+
+## 3. Testando os serviços
+
+Uma vez com a aplicação rodando é necessário apenas realizar a chamada dos serviços. A seguir são mostradas as chamadas e os respectivos resultados.
+
+* GET ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Lista todos os registros da entidade.
+
+* GET ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}**/{id}** - Busca a entidade por id.
+
+* POST ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Cria um novo registro para a entidade. No corpo da requisição deve ser enviado os dados da entidade em JSON.
+
+* PUT ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Edita um registro de uma entidade. No corpo da requisição deve ser enviado os dados da entidade em JSON.
+
+* DELETE ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}**/**{id}** - Deleta um registro de uma entidade pelo id.
+
+* DELETE ht<span>tp://localhost:**{porta do projeto}**/**{nome do projet}**/api/**{entidade}** - Deleta um registro de uma entidade. No corpo da requisição deve ser enviado os dados da entidade em JSON.
+
+## 4. Outros Recursos
+
+Como um dos objetivos da aplicação é que seja consumida por outras aplicações, foi disponibilizada uma documentação dos serviços. Esta documentação é acessível na URL ht<span>tp://localhost:**{porta do projeto}**/**{nome do projeto}**/swagger-ui.html
+
+É possível acessar o banco embarcado pela a URL: ht<span>tp://localhost:**{porta do projeto}**/**{nome do projeto}**/h2-console
+
+* JDBC URL: jdbc:h2:mem:**{nome do banco}**
+* Username: **{usuário do banco}**
+* Password: **{senha do banco}**
+
+## 5. Observações
+
+Diversas funcionalidades podem ser desenvolvidas no projeto. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos.
