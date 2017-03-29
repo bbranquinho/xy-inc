@@ -10,7 +10,7 @@ Para executar o projeto é necessária a instalação das seguintes ferramentas:
     2. Kotlin 1.1 (opcional)
     3. Gradle (versão 2.14.1 - recomendada/testada)
 
-Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([Thank you Jetbrains](https://www.jetbrains.com/idea/)) para realizar novos desenvolvimentos.
+Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ para realizar novos desenvolvimentos.
 
 ## 2. Executando o Projeto
 
@@ -75,7 +75,7 @@ Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API
 
 Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
 
-Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados com o [Flyway](https://flywaydb.org/) ou [Liquibase](http://www.liquibase.org/). Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
+Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados e persistência.
 
 ## 4. Gerenciamento das APIs
 
