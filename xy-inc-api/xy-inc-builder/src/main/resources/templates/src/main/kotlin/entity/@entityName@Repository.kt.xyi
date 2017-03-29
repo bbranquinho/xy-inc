@@ -1,0 +1,9 @@
+package @packageName@.@entitySimpleName@
+
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface @entityName@Repository : JpaRepository<@entityName@Entity, @keyType@> {
+
+    // @repositorySearch@
+
+}

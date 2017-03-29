@@ -2,6 +2,7 @@ package br.com.xy.inc.service
 
 import br.com.xy.inc.service.beans.ModelBean
 import br.com.xy.inc.service.beans.ProjectResultBean
+import br.com.xy.inc.service.utils.BaseResource
 import br.com.xy.inc.utils.builder.ApiBuilder
 import br.com.xy.inc.utils.template.EntityBean
 import br.com.xy.inc.utils.template.ProjectBean
@@ -14,37 +15,33 @@ import java.util.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = arrayOf("/api/project"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
-open class ApiBuilderResource {
+@RequestMapping(path = arrayOf("/api/project"))
+open class ApiBuilderResource: BaseResource {
 
     @Autowired
     lateinit var apiBuilder: ApiBuilder
 
     @GetMapping(consumes = arrayOf(MediaType.ALL_VALUE))
-    fun listProjects(): List<ProjectBean> {
-        return apiBuilder.getAllProjects()
-    }
+    fun listProjects() = apiBuilder.getAllProjects()
 
     @GetMapping("/{projectName}", consumes = arrayOf(MediaType.ALL_VALUE))
-    fun findProject(@PathVariable("projectName") projectName: String): ResponseEntity<ProjectBean> {
-        return Optional.ofNullable(apiBuilder.getProject(projectName))
-                .map{ r -> ResponseEntity<ProjectBean>(r, HttpStatus.OK) }
-                .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
-    }
+    fun findProject(@PathVariable("projectName") projectName: String) =
+            Optional.ofNullable(apiBuilder.getProject(projectName))
+                    .map{ r -> ResponseEntity<ProjectBean>(r, HttpStatus.OK) }
+                    .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
+
 
     @GetMapping("/{projectName}/entities", consumes = arrayOf(MediaType.ALL_VALUE))
-    fun findEntitiesByProject(@PathVariable("projectName") projectName: String): ResponseEntity<List<EntityBean>> {
-        return Optional.ofNullable(apiBuilder.getEntitiesByProject(projectName))
-                .map{ r -> ResponseEntity<List<EntityBean>>(r, HttpStatus.OK) }
-                .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
-    }
+    fun findEntitiesByProject(@PathVariable("projectName") projectName: String) =
+            Optional.ofNullable(apiBuilder.getEntitiesByProject(projectName))
+                    .map{ r -> ResponseEntity<List<EntityBean>>(r, HttpStatus.OK) }
+                    .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @GetMapping("/{projectName}/entities/{entityName}", consumes = arrayOf(MediaType.ALL_VALUE))
-    fun findEntitiyByProject(@PathVariable("projectName") projectName: String, @PathVariable("entityName") entityName: String): ResponseEntity<EntityBean> {
-        return Optional.ofNullable(apiBuilder.getEntitiyByProject(projectName, entityName))
-                .map{ r -> ResponseEntity<EntityBean>(r, HttpStatus.OK) }
-                .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
-    }
+    fun findEntitiyByProject(@PathVariable("projectName") projectName: String, @PathVariable("entityName") entityName: String) =
+            Optional.ofNullable(apiBuilder.getEntitiyByProject(projectName, entityName))
+                    .map{ r -> ResponseEntity<EntityBean>(r, HttpStatus.OK) }
+                    .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @PostMapping
     fun createNewProject(@Valid @RequestBody project: ProjectBean): ProjectResultBean {

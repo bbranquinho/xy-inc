@@ -1,0 +1,15 @@
+package @packageName@.@entitySimpleName@
+
+import @packageName@.utils.GenericResource
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping(path = arrayOf("/api/@entitySimpleName@"))
+open class @entityName@Resource : GenericResource<@entityName@Entity, Long>() {
+
+    override fun getBaseUrl() = "/api/@entitySimpleName@"
+
+    // @resourceSearch@
+
+}

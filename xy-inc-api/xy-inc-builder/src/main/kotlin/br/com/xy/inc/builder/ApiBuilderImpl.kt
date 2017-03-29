@@ -31,19 +31,14 @@ open class ApiBuilderImpl : ApiBuilder {
     @Autowired
     lateinit var apiManager: ApiManager
 
-    override fun isProjectExists(projectName: String): Boolean {
-        return File(applicationProperties.projectPath + "/" + projectName).exists()
-    }
+    override fun isProjectExists(projectName: String) =
+            File(applicationProperties.projectPath + "/" + projectName).exists()
 
-    override fun isEntityExists(projectName: String, entityName: String): Boolean {
-        return File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName.toLowerCase() + ".json").exists()
-    }
+    override fun isEntityExists(projectName: String, entityName: String) =
+            File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName.toLowerCase() + ".json").exists()
 
-    override fun createEntity(projectName: String, entity: EntityBean) {
-        val  project = mapper.readValue(File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json"), ProjectBean::class.java)
-
-        createEntity(project, entity)
-    }
+    override fun createEntity(projectName: String, entity: EntityBean) =
+            createEntity(mapper.readValue(File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json"), ProjectBean::class.java), entity)
 
     override fun getAllProjects(): List<ProjectBean> {
         val projectFilePath = File(applicationProperties.projectPath)
@@ -56,7 +51,7 @@ open class ApiBuilderImpl : ApiBuilder {
                 if (project.exists() && project.isFile()) {
                     projects.add(mapper.readValue(project, ProjectBean::class.java))
                 } else {
-                    logger.error("Project not found [%s]".format(project.absolutePath))
+                    logger.error("Project not found [{}].", project.absolutePath)
                 }
             }
         }
@@ -67,21 +62,19 @@ open class ApiBuilderImpl : ApiBuilder {
     override fun getProject(projectName: String): ProjectBean? {
         val project = File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json")
 
-        if (project.exists() && project.isFile()) {
-            return mapper.readValue(project, ProjectBean::class.java)
-        } else {
-            return null
-        }
+        return if (project.exists() && project.isFile())
+            mapper.readValue(project, ProjectBean::class.java)
+        else
+            null
     }
 
     override fun getEntitiyByProject(projectName: String, entityName: String): EntityBean? {
         val project = File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName + ".json")
 
-        if (project.exists() && project.isFile()) {
-            return mapper.readValue(project, EntityBean::class.java)
-        } else {
-            return null
-        }
+        return if (project.exists() && project.isFile())
+            mapper.readValue(project, EntityBean::class.java)
+        else
+            null
     }
 
     override fun getEntitiesByProject(projectName: String): List<EntityBean>? {
@@ -103,7 +96,7 @@ open class ApiBuilderImpl : ApiBuilder {
         val file = File(applicationProperties.projectPath)
 
         if (!file.exists()) {
-            logger.info("Creating the project folder [%s]".format(applicationProperties.projectPath))
+            logger.info("Creating the project folder [{}]", applicationProperties.projectPath)
             file.mkdir()
         }
 
@@ -113,7 +106,7 @@ open class ApiBuilderImpl : ApiBuilder {
             projectFilePath.mkdir()
         }
 
-        logger.info("Creating the project folder [%s]".format(projectFilePath.absolutePath))
+        logger.info("Creating the project folder [{}]", projectFilePath.absolutePath)
         projectFilePath.mkdir()
         createPackafeFolders(projectFilePath, project)
 
@@ -208,7 +201,7 @@ open class ApiBuilderImpl : ApiBuilder {
     }
 
     private fun saveCode(properties: List<PairProperty>, xyiFile: String, projectFolder: String, codeFilename: String) {
-        logger.debug("Creating the file [%s] inside the folder [%s].".format(codeFilename, projectFolder))
+        logger.debug("Creating the file [{}] inside the folder [{}].", codeFilename, projectFolder)
 
         val code = propertyReplacer.replaceProperties(properties, xyiFile)
 
