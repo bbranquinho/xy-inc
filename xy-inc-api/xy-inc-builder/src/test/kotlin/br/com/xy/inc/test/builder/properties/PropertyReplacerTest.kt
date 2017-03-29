@@ -24,7 +24,7 @@ open class PropertyReplacerTest: BaseTest() {
         properties.add(PairProperty("keyName", "pk"))
         properties.add(PairProperty("keyType", "Long"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/entity/Entity.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/entity/Entity.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerEntity.test").readText())
     }
@@ -38,7 +38,7 @@ open class PropertyReplacerTest: BaseTest() {
         properties.add(PairProperty("entityName", "ProductEntity"))
         properties.add(PairProperty("resourceName", "ProductResource"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/entity/Resource.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/entity/Resource.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerResource.test").readText())
     }
@@ -53,7 +53,7 @@ open class PropertyReplacerTest: BaseTest() {
         properties.add(PairProperty("repositoryName", "ProductRepository"))
         properties.add(PairProperty("keyType", "Long"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/entity/Repository.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/entity/Repository.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerRepository.test").readText())
     }
@@ -64,7 +64,7 @@ open class PropertyReplacerTest: BaseTest() {
 
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/project/Application.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/Application.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerApplication.test").readText())
     }
@@ -75,7 +75,7 @@ open class PropertyReplacerTest: BaseTest() {
 
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/project/BaseEntity.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/utils/BaseEntity.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerBaseEntity.test").readText())
     }
@@ -88,7 +88,7 @@ open class PropertyReplacerTest: BaseTest() {
         properties.add(PairProperty("projectVersion", "0.0.1"))
         properties.add(PairProperty("projectName", "xy-inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/project/ApplicationConfig.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/utils/ApplicationConfig.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerApplicationConfig.test").readText())
     }
@@ -99,7 +99,7 @@ open class PropertyReplacerTest: BaseTest() {
 
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/project/GenericResource.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/utils/GenericResource.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerGenericResource.test").readText())
     }
@@ -110,7 +110,7 @@ open class PropertyReplacerTest: BaseTest() {
 
         properties.add(PairProperty("projectName", "xy-inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/structure/settings.gradle.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/settings.gradle.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerSettingsGradle.test").readText())
     }
@@ -122,7 +122,7 @@ open class PropertyReplacerTest: BaseTest() {
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
         properties.add(PairProperty("projectVersion", "0.0.1"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/structure/gradle.properties.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/gradle.properties.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerGradleProperties.test").readText())
     }
@@ -133,7 +133,7 @@ open class PropertyReplacerTest: BaseTest() {
 
         properties.add(PairProperty("packageName", "br.com.xy.inc"))
 
-        val fileText = propertyReplacer.replaceProperties(properties, "/templates/project/PaginationUtil.xyi")
+        val fileText = propertyReplacer.replaceProperties(properties, "/templates/src/main/kotlin/utils/PaginationUtil.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerPaginationUtil.test").readText())
     }

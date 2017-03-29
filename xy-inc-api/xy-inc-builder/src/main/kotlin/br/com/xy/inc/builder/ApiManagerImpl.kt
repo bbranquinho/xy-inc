@@ -34,14 +34,12 @@ open class ApiManagerImpl: ApiManager {
         var project = apiBuilder.getProject(projectName)
 
         if (project == null) {
-            logger.warn("Project [%s] not found.".format(projectName))
-            return false
+            logger.warn("Project [{}] not found.", projectName)
+            return false;
         }
 
         if (apiCache.get(projectName) == null) {
-            if (logger.isDebugEnabled) {
-                logger.debug("Starting the API [%s]".format(projectName))
-            }
+            logger.debug("Starting the API [{}]", projectName)
 
             val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(project.name) })
 
@@ -53,23 +51,18 @@ open class ApiManagerImpl: ApiManager {
 
             return true
         } else {
-            if (logger.isDebugEnabled) {
-                logger.debug("API is running [%s]".format(projectName))
-            }
-
+            logger.debug("API is running [{}]", projectName)
             return false
         }
     }
 
     override fun stopApi(projectName: String): StopResponseBean? {
-        if (logger.isDebugEnabled) {
-            logger.debug("Stopping the API [%s]".format(projectName))
-        }
+        logger.debug("Stopping the API [{}]", projectName)
 
         var project = apiBuilder.getProject(projectName)
 
         if (project == null) {
-            logger.warn("Project [%s] not found.".format(projectName))
+            logger.warn("Project [{}] not found.", projectName)
             return null
         }
 
@@ -90,7 +83,7 @@ open class ApiManagerImpl: ApiManager {
         return apiCache.get(projectName)?.getLog()
     }
 
-    private class ApiRunnable(val project: ProjectBean, var maxQueueSize: Int?, val onFinish: () -> ApiRunnable?): Runnable {
+    private class ApiRunnable(val project: ProjectBean, var maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
 
         val logger = LoggerFactory.getLogger(ApiRunnable::class.java)
 
@@ -105,18 +98,17 @@ open class ApiManagerImpl: ApiManager {
             val warDir = "build/libs/" + project.name + "-" + project.version + ".war"
             val os = System.getProperty("os.name").toLowerCase()
 
-            if (os.startsWith("linux") || os.startsWith("mac")) {
-                script = projectDir + "/start_api.sh"
-            } else if (os.startsWith("win")) {
-                script = projectDir + "/start_api.bat"
-            } else {
+            script = if (os.startsWith("linux") || os.startsWith("mac"))
+                projectDir + "/start_api.sh"
+            else if (os.startsWith("win"))
+                projectDir + "/start_api.bat"
+            else
                 throw Exception("OS [%s] not supported yet.".format(os))
-            }
 
             try {
                 var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))
 
-                logger.info("API: [%s] started".format(project.name))
+                logger.info("API: [{}] started", project.name)
 
                 val input = BufferedReader(InputStreamReader(process.getInputStream()))
                 var line = input.readLine()
@@ -124,7 +116,7 @@ open class ApiManagerImpl: ApiManager {
                 while (line != null) {
                     logQueue.add(line)
 
-                    logger.debug("API: [%s] output [%s]".format(project.name, line))
+                    logger.debug("API: [{}] output [{}]", project.name, line)
 
                     while ((maxQueueSize != null) && (logQueue.size > maxQueueSize!!)) {
                         logQueue.poll()
@@ -141,7 +133,7 @@ open class ApiManagerImpl: ApiManager {
                 logger.error(e.message, e)
             }
 
-            logger.info("API: [%s] stopped".format(project.name))
+            logger.info("API: [{}] stopped", project.name)
 
             onFinish()
         }
