@@ -1,16 +1,20 @@
 # xy-inc-api
 
-Este projeto é responsável por criar APIs/aplicações/projetos REST. Os serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
+Este projeto é responsável por criar APIs/projetos REST. Os serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
+
+Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
+
+Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos, tanto a nível de arquitetura, requisitos, deploy, validações e testes. Foram criados testes unitários para alguns pontos da API, contudo, outros testes podem ser desenvolvidos futuramente. Um ponto muito importante que precisa ser realizado em trabalhos futuros é a validação dos parâmetros dos serviços.
 
 ## 1. Requisitos e Configurações
 
 Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
-    2. Kotlin 1.1 (opcional)
-    3. Gradle (versão 2.14.1 - recomendada/testada)
+    2. Gradle (versão 2.14.1 - recomendada/testada)
+    3. Kotlin 1.1 (opcional)
 
-Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ para realizar novos desenvolvimentos.
+Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([thank you Jetbrains](https://www.jetbrains.com/idea/)) para realizar novos desenvolvimentos.
 
 ## 2. Executando o Projeto
 
@@ -69,13 +73,11 @@ $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: appli
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
 
-### 3.1. Especificações das APIs
-
 Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
 
 Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
 
-Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Uma melhoria futura consiste em controlar alterações do banco de dados e persistência.
+Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
 
 ## 4. Gerenciamento das APIs
 
@@ -131,53 +133,53 @@ $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc
 $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
 ```
 
-## 5. Testando os Serviços
+## 5. Testando as APIs
 
 Uma vez com a API rodando e as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
 
-* GET /**{nome da API}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product
 ```
 
-* GET /**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}** - Lista paginado (size = tamanho da página, page = número da página) os dados para a entidade especificada. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}** - Lista paginado (size = tamanho da página, page = número da página) os dados para a entidade especificada. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10
 ```
 
-* GET /**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos da entidade}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos da entidade separados por vírgula) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos da entidade}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos da entidade separados por vírgula) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10&direction=DESC&fields=name,description
 ```
 
-* GET /**{nome da API}**/api/**{entidade}**/**{id}** - Busca uma entidade pelo seu id.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**/**{id}** - Busca uma entidade pelo seu id.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product/1
 ```
 
-* POST /**{nome da API}**/api/**{entidade}** - Cria um novo registro para a entidade.
+* POST ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Cria um novo registro para a entidade.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "description":"Descrição 1", "price":10.23, "category":"Categoria 1"}' http://localhost:8080/mobile-api/api/product
 ```
 
-* PUT /**{nome da API}**/api/**{entidade}** - Edita o registro de uma entidade.
+* PUT ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Edita o registro de uma entidade.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X PUT -d '{"id":1, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/mobile-api/api/product
 ```
 
-* DELETE /**{nome da API}**/api/**{entidade}**/**{id}** - Deleta o registro de uma entidade pelo **id**.
+* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**/**{id}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobile-api/api/product/1
 ```
 
-* DELETE /**{nome da API}**/api/**{entidade}** - Deleta o registro de uma entidade pelo **id**.
+* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Deleta o registro de uma entidade pelo **id**.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":1}' http://localhost:8080/mobile-api/api/product
@@ -192,14 +194,6 @@ $ java -jar build/libs/mobile-api-0.0.1-SNAPSHOT.war
 
 Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas. Apesar de rodar com um servidor de aplicação embarcado, a API também pode ser colocada no JBoss EAP 7.0 ou Wildfly 10.
 
-### 5.1. Outros Recursos
-
 Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
 
 Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
-
-## 6. Observações
-
-Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
-
-Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que seja uma aplicação simples e direta, não foram realizados outros desenvolvimentos, tanto a nível de arquitetura, requisitos, deploy, validações e testes. Foram criados testes unitários para alguns pontos da API, contudo, outros testes podem ser desenvolvidos futuramente. Um ponto muito importante que precisa ser realizado em trabalhos futuros é a validação dos parâmetros dos serviços.
