@@ -5,7 +5,7 @@ import javax.validation.constraints.Size
 
 open class FieldBean {
 
-    constructor() {}
+    constructor()
 
     constructor(name: String, type: TypeFieldBean) {
         this.name = name;

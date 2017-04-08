@@ -1,6 +1,7 @@
 package br.com.xy.inc.utils.template
 
 enum class TypeFieldBean(val type: String, val defaultValue: String) {
+
     DATETIME("Date", "Date()"),
 
     DECIMAL("BigDecimal", "BigDecimal(0)"),
@@ -14,4 +15,5 @@ enum class TypeFieldBean(val type: String, val defaultValue: String) {
     LONG("Long", "0L"),
 
     STRING("String", "")
+    
 }

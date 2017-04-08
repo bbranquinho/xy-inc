@@ -22,7 +22,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("type", "Integer"))
         properties.add(PairProperty("defaultValue", "0"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldInteger.test").readText())
     }
@@ -36,7 +36,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("type", "Integer"))
         properties.add(PairProperty("nullable", "true"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerNullableTrue.test").readText())
     }
@@ -51,7 +51,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("defaultValue", "0"))
         properties.add(PairProperty("nullable", "false"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerNullableFalse.test").readText())
     }
@@ -66,7 +66,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("defaultValue", "0"))
         properties.add(PairProperty("unique", "true"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerUniqueTrue.test").readText())
     }
@@ -81,7 +81,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("defaultValue", "0"))
         properties.add(PairProperty("unique", "false"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerUniqueFalse.test").readText())
     }
@@ -96,7 +96,7 @@ open class PropertyReplacerFieldTest: BaseTest() {
         properties.add(PairProperty("defaultValue", "0"))
         properties.add(PairProperty("length", "10"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/kotlin/entity/Field.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi")
 
         assertEquals(fileText, File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerFieldIntegerLength.test").readText())
     }
