@@ -12,6 +12,6 @@ app:
     path: projects
   api:
     log:
-      size: 50
+      size: 100
     start:
       automatically: true

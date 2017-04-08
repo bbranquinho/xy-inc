@@ -5,6 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan(basePackages = arrayOf("br.com.xy.inc.utils"))
-open class UtilsConfig {
-
-}
+open class UtilsConfig

@@ -2,8 +2,8 @@ package br.com.xy.inc.builder.properties
 
 open class PairProperty constructor(token: String, value: String) {
 
-    var token = token
+    val token = token
 
-    var value = value
+    val value = value
 
 }

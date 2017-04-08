@@ -38,22 +38,17 @@ open class ApiManagerImpl: ApiManager {
             return false;
         }
 
-        if (apiCache.get(projectName) == null) {
-            logger.debug("Starting the API [{}]", projectName)
+        apiCache.computeIfAbsent(projectName, {
+            logger.debug("Starting the API [{}]", it)
 
-            val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(project.name) })
-
-            apiCache.put(project.name, apiRunnable);
+            val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(it) })
 
             apiRunnable.thread = Thread(apiRunnable)
-
             apiRunnable.start()
+            apiRunnable
+        })
 
-            return true
-        } else {
-            logger.debug("API is running [{}]", projectName)
-            return false
-        }
+        return true
     }
 
     override fun stopApi(projectName: String): StopResponseBean? {
@@ -79,11 +74,10 @@ open class ApiManagerImpl: ApiManager {
         return shutdownResponse
     }
 
-    override fun getLogStatusApi(projectName: String): List<String>? {
-        return apiCache.get(projectName)?.getLog()
-    }
+    override fun getLogStatusApi(projectName: String) =
+        apiCache.get(projectName)?.getLog()
 
-    private class ApiRunnable(val project: ProjectBean, var maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
+    private class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
 
         val logger = LoggerFactory.getLogger(ApiRunnable::class.java)
 
@@ -93,12 +87,11 @@ open class ApiManagerImpl: ApiManager {
 
         override fun run() {
             val projectDir = System.getProperty("user.dir")
-            var script: String
             val apiDir = projectDir + "/projects/" + project.name
             val warDir = "build/libs/" + project.name + "-" + project.version + ".war"
             val os = System.getProperty("os.name").toLowerCase()
 
-            script = if (os.startsWith("linux") || os.startsWith("mac"))
+            var script = if (os.startsWith("linux") || os.startsWith("mac"))
                 projectDir + "/start_api.sh"
             else if (os.startsWith("win"))
                 projectDir + "/start_api.bat"
@@ -107,15 +100,13 @@ open class ApiManagerImpl: ApiManager {
 
             try {
                 var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))
-
-                logger.info("API: [{}] started", project.name)
-
                 val input = BufferedReader(InputStreamReader(process.getInputStream()))
                 var line = input.readLine()
 
+                logger.info("API: [{}] started", project.name)
+
                 while (line != null) {
                     logQueue.add(line)
-
                     logger.debug("API: [{}] output [{}]", project.name, line)
 
                     while ((maxQueueSize != null) && (logQueue.size > maxQueueSize!!)) {
@@ -140,7 +131,7 @@ open class ApiManagerImpl: ApiManager {
 
         fun getLog() = logQueue.toList()
         
-        // Stop a thread not is a good practice, but in this case we have to do it.
+        // Stop a thread not is a good practice, but in this case we can and have to do it.
         @Suppress("DEPRECATION")
         fun stop() = thread?.stop()
 

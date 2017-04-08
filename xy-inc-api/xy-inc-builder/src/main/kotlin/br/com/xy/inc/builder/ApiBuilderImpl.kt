@@ -108,7 +108,7 @@ open class ApiBuilderImpl : ApiBuilder {
 
         logger.info("Creating the project folder [{}]", projectFilePath.absolutePath)
         projectFilePath.mkdir()
-        createPackafeFolders(projectFilePath, project)
+        createPackageFolders(projectFilePath, project)
 
         saveProperties(project, "project.json", projectFilePath)
 
@@ -136,14 +136,14 @@ open class ApiBuilderImpl : ApiBuilder {
                     PairProperty("length", "255")
             )
 
-            fieldsCode += "\n" + propertyReplacer.replaceFieldProperties(fieldProperties, "/templates/src/main/kotlin/entity/Field.xyi") + "\n"
+            fieldsCode += "\n" + propertyReplacer.replaceFieldProperties(fieldProperties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi") + "\n"
         }
 
         val entityFolder = projectFilePath.absolutePath + "/src/main/kotlin/" + project.basePackage.replace(".", "/") + "/" + entity.name
         val entitySimpleName = entity.name[0].toUpperCase() + entity.name.substring(1)
 
         val entityProperties = arrayListOf<PairProperty>(
-                PairProperty("tableName", entity.name),
+                PairProperty("tableName", entity.tableName),
                 PairProperty("entityName", entitySimpleName + "Entity"),
                 PairProperty("keyType", TypeFieldBean.LONG.type),
                 PairProperty("field", fieldsCode),
@@ -154,9 +154,9 @@ open class ApiBuilderImpl : ApiBuilder {
                 PairProperty("resourceName", entitySimpleName + "Resource")
         )
 
-        saveCode(entityProperties, "/templates/src/main/kotlin/entity/Entity.xyi", entityFolder, entitySimpleName + "Entity.kt")
-        saveCode(entityProperties, "/templates/src/main/kotlin/entity/Repository.xyi", entityFolder, entitySimpleName + "Repository.kt")
-        saveCode(entityProperties, "/templates/src/main/kotlin/entity/Resource.xyi", entityFolder, entitySimpleName + "Resource.kt")
+        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Entity.kt.xyi", entityFolder, entitySimpleName + "Entity.kt")
+        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Repository.kt.xyi", entityFolder, entitySimpleName + "Repository.kt")
+        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Resource.kt.xyi", entityFolder, entitySimpleName + "Resource.kt")
 
         saveProperties(entity, entity.name + ".json", projectFilePath)
 
@@ -166,7 +166,7 @@ open class ApiBuilderImpl : ApiBuilder {
         }
     }
 
-    private fun createPackafeFolders(projectFilePath: File, project: ProjectBean) {
+    private fun createPackageFolders(projectFilePath: File, project: ProjectBean) {
         val projectFolders = projectFilePath.absolutePath + "/src/main/kotlin/" + project.basePackage.replace(".", "/")
         val projectResourceFolders = projectFilePath.absolutePath + "/src/main/resources"
 
@@ -183,21 +183,21 @@ open class ApiBuilderImpl : ApiBuilder {
             PairProperty("databasePassword", project.databasePassword)
         )
 
-        saveCode(projectProperties, "/templates/src/main/kotlin/Application.xyi", projectFolders, "Application.kt")
-        saveCode(projectProperties, "/templates/src/main/kotlin/utils/ApplicationConfig.xyi", projectFolders + "/utils", "ApplicationConfig.kt")
-        saveCode(projectProperties, "/templates/src/main/kotlin/utils/BaseEntity.xyi", projectFolders + "/utils", "BaseEntity.kt")
-        saveCode(projectProperties, "/templates/src/main/kotlin/utils/GenericResource.xyi", projectFolders + "/utils", "GenericResource.kt")
-        saveCode(projectProperties, "/templates/src/main/kotlin/utils/PaginationUtil.xyi", projectFolders + "/utils", "PaginationUtil.kt")
+        saveCode(projectProperties, "/templates/project/src/main/kotlin/Application.kt.xyi", projectFolders, "Application.kt")
+        saveCode(projectProperties, "/templates/project/src/main/kotlin/utils/ApplicationConfig.kt.xyi", projectFolders + "/utils", "ApplicationConfig.kt")
+        saveCode(projectProperties, "/templates/project/src/main/kotlin/utils/BaseEntity.kt.xyi", projectFolders + "/utils", "BaseEntity.kt")
+        saveCode(projectProperties, "/templates/project/src/main/kotlin/utils/GenericResource.kt.xyi", projectFolders + "/utils", "GenericResource.kt")
+        saveCode(projectProperties, "/templates/project/src/main/kotlin/utils/PaginationUtil.kt.xyi", projectFolders + "/utils", "PaginationUtil.kt")
 
-        saveCode(projectProperties, "/templates/build.gradle.xyi", projectFilePath.absolutePath, "build.gradle")
-        saveCode(projectProperties, "/templates/gradle.properties.xyi", projectFilePath.absolutePath, "gradle.properties")
-        saveCode(projectProperties, "/templates/README.md.xyi", projectFilePath.absolutePath, "README.md")
-        saveCode(projectProperties, "/templates/settings.gradle.xyi", projectFilePath.absolutePath, "settings.gradle")
+        saveCode(projectProperties, "/templates/project/build.gradle.xyi", projectFilePath.absolutePath, "build.gradle")
+        saveCode(projectProperties, "/templates/project/gradle.properties.xyi", projectFilePath.absolutePath, "gradle.properties")
+        saveCode(projectProperties, "/templates/project/README.md.xyi", projectFilePath.absolutePath, "README.md")
+        saveCode(projectProperties, "/templates/project/settings.gradle.xyi", projectFilePath.absolutePath, "settings.gradle")
 
-        saveCode(projectProperties, "/templates/src/main/resources/application.xyi", projectResourceFolders, "application.yml")
-        saveCode(projectProperties, "/templates/src/main/resources/application-dev.xyi", projectResourceFolders, "application-dev.yml")
-        saveCode(projectProperties, "/templates/src/main/resources/application-prod.xyi", projectResourceFolders, "application-prod.yml")
-        saveCode(projectProperties, "/templates/src/main/webapp/WEB-INF/jboss-web.xyi", projectResourceFolders + "/../webapp/WEB-INF", "jboss-web.xml")
+        saveCode(projectProperties, "/templates/project/src/main/resources/application.yml.xyi", projectResourceFolders, "application.yml")
+        saveCode(projectProperties, "/templates/project/src/main/resources/application-dev.yml.xyi", projectResourceFolders, "application-dev.yml")
+        saveCode(projectProperties, "/templates/project/src/main/resources/application-prod.yml.xyi", projectResourceFolders, "application-prod.yml")
+        saveCode(projectProperties, "/templates/project/src/main/webapp/WEB-INF/jboss-web.xml.xyi", projectResourceFolders + "/../webapp/WEB-INF", "jboss-web.xml")
     }
 
     private fun saveCode(properties: List<PairProperty>, xyiFile: String, projectFolder: String, codeFilename: String) {

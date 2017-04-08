@@ -24,6 +24,6 @@ open class FactoryConfig {
     @Bean
     open fun newsApi() = Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().paths(regex("/api/.*")).build()
 
-    fun apiInfo() = ApiInfoBuilder().title("XY-Inc").description("Swagger API").version("0.0.1-SNAPSHOT").build()
+    private fun apiInfo() = ApiInfoBuilder().title("XY-Inc").description("Swagger API").version("0.0.1-SNAPSHOT").build()
 
 }

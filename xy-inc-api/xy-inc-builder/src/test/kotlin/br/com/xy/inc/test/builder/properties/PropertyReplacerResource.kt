@@ -20,7 +20,7 @@ open class PropertyReplacerResource: BaseTest() {
         properties.add(PairProperty("projectName", "xy-inc"))
         properties.add(PairProperty("projectPort", "8081"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/resources/application.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/project/src/main/resources/application.yml.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerResourceApplication.test").readText())
     }
@@ -35,7 +35,7 @@ open class PropertyReplacerResource: BaseTest() {
         properties.add(PairProperty("databaseUsername", "root"))
         properties.add(PairProperty("databasePassword", "root"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/resources/application-dev.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/project/src/main/resources/application-dev.yml.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerResourceApplicationDev.test").readText())
     }
@@ -50,7 +50,7 @@ open class PropertyReplacerResource: BaseTest() {
         properties.add(PairProperty("databaseUsername", "root"))
         properties.add(PairProperty("databasePassword", "root"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/resources/application-prod.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/project/src/main/resources/application-prod.yml.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerResourceApplicationProd.test").readText())
     }
@@ -61,7 +61,7 @@ open class PropertyReplacerResource: BaseTest() {
 
         properties.add(PairProperty("projectName", "xy-inc"))
 
-        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/src/main/webapp/WEB-INF/jboss-web.xyi")
+        val fileText = propertyReplacer.replaceFieldProperties(properties, "/templates/project/src/main/webapp/WEB-INF/jboss-web.xml.xyi")
 
         assertEquals(fileText,  File(System.getProperty("user.dir") + "/src/test/resources/templates/testPropertyReplacerResourceApplicationJBossWeb.test").readText())
     }

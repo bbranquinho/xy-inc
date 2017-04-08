@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: @projectName@
-  profiles:
-    active: dev
-
-server:
-  contextPath: /@projectName@
-  port: @projectPort@
