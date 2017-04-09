@@ -130,14 +130,14 @@ open class ApiManagerImpl: ApiManager {
         }
 
         fun getLog() = logQueue.toList()
-        
+
         // Stop a thread not is a good practice, but in this case we can and have to do it.
         @Suppress("DEPRECATION")
         fun stop() = thread?.stop()
 
         fun start() = thread?.start()
 
-        fun formatError(proc: Process): String {
+        private fun formatError(proc: Process): String {
             val input = BufferedReader(InputStreamReader(proc.getErrorStream()))
             var line = input.readLine()
             var output = ""

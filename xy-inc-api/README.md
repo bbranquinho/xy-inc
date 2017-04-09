@@ -135,6 +135,11 @@ $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc
 
 ## 5. Testando as APIs
 
+
+Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
+
+Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
+
 Uma vez com a API rodando e as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
 
 * GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
@@ -193,7 +198,3 @@ $ java -jar build/libs/mobile-api-0.0.1-SNAPSHOT.war
 ```
 
 Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas. Apesar de rodar com um servidor de aplicação embarcado, a API também pode ser colocada no JBoss EAP 7.0 ou Wildfly 10.
-
-Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
-
-Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.

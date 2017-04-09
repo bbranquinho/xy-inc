@@ -35,7 +35,4 @@ open class ProjectBean {
     @NotNull
     var databasePassword = ""
 
-    // TODO augusto.branquinho: Add support to multiple databases.
-    //var databaseType = DatabaseType.H2DB
-
 }

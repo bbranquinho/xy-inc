@@ -38,7 +38,8 @@ open class ApiBuilderImpl : ApiBuilder {
             File(applicationProperties.projectPath + "/" + projectName + "/.xyi/" + entityName.toLowerCase() + ".json").exists()
 
     override fun createEntity(projectName: String, entity: EntityBean) =
-            createEntity(mapper.readValue(File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json"), ProjectBean::class.java), entity)
+            createEntity(mapper.readValue(File(applicationProperties.projectPath + "/" + projectName + "/.xyi/project.json"),
+                    ProjectBean::class.java), entity)
 
     override fun getAllProjects(): List<ProjectBean> {
         val projectFilePath = File(applicationProperties.projectPath)

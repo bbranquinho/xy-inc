@@ -30,17 +30,17 @@ open class ApiManagerResource: BaseResource {
         else
             ResponseEntity<Any>(HttpStatus.OK)
 
+    @PostMapping("/stop/{projectName}")
+    fun stopProject(@PathVariable("projectName") projectName: String) =
+        Optional.ofNullable(apiManager.stopApi(projectName))
+                .map{ r -> ResponseEntity<StopResponseBean>(r, HttpStatus.OK) }
+                .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
+
     @PostMapping("/restart/{projectName}")
     fun restartProject(@PathVariable("projectName") projectName: String): ResponseEntity<Any> {
         stopProject(projectName)
 
         return startProject(projectName)
     }
-
-    @PostMapping("/stop/{projectName}")
-    fun stopProject(@PathVariable("projectName") projectName: String) =
-        Optional.ofNullable(apiManager.stopApi(projectName))
-                .map{ r -> ResponseEntity<StopResponseBean>(r, HttpStatus.OK) }
-                .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
 }
