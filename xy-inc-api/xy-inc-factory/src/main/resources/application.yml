@@ -3,7 +3,6 @@ spring:
     name: xy-inc
   profiles:
     active: dev
-
 server:
   contextPath: /xy-inc
   port: 9000

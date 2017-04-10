@@ -125,6 +125,10 @@ open class ApiBuilderImpl : ApiBuilder {
             throw Exception("Project must exist [${project.name}]")
         }
 
+        if (applicationProperties.isStartApiAutomatically) {
+            apiManager.stopApi(project.name)
+        }
+
         var fieldsCode = ""
 
         entity.fields.forEach {
@@ -162,7 +166,6 @@ open class ApiBuilderImpl : ApiBuilder {
         saveProperties(entity, "${entity.name}.json", projectFilePath)
 
         if (applicationProperties.isStartApiAutomatically) {
-            apiManager.stopApi(project.name)
             apiManager.startApi(project.name)
         }
     }

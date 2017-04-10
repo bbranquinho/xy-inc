@@ -52,8 +52,6 @@ open class ApiManagerImpl: ApiManager {
     }
 
     override fun stopApi(projectName: String): StopResponseBean? {
-        logger.debug("Stopping the API [{}]", projectName)
-
         var project = apiBuilder.getProject(projectName)
 
         if (project == null) {
@@ -61,18 +59,17 @@ open class ApiManagerImpl: ApiManager {
             return null
         }
 
-        var shutdownResponse: StopResponseBean? = null
+        logger.debug("Stopping the API [{}]", projectName)
 
         try {
-            shutdownResponse = restTemplate
-                    .postForEntity("http://localhost:${project.port}/${project.name}/shutdown", {}, StopResponseBean::class.java).body
+            restTemplate.postForLocation("http://localhost:${project.port}/${project.name}/shutdown", {})
         } catch (e: Exception) {
             logger.debug(e.message)
         }
 
         apiCache.remove(projectName)?.stop()
 
-        return shutdownResponse
+        return StopResponseBean("${projectName} stopped.")
     }
 
     override fun getLogStatusApi(projectName: String) =
