@@ -130,7 +130,7 @@ $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc
 * GET **ht<span>tp://localhost:9000/xy-inc/api/manager/log/{nome da API}** - Recupera parte do log da API.
 
 ```sh
-$ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
+$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
 ```
 
 ## 5. Testando as APIs
