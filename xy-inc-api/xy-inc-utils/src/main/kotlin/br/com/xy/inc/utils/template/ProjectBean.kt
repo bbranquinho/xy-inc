@@ -1,38 +1,16 @@
 package br.com.xy.inc.utils.template
 
+import br.com.xy.inc.utils.BaseBean
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
-
-open class ProjectBean {
-
-    @NotNull
-    @Size(min = 4)
-    var name = ""
-
-    @NotNull
-    var port = 8080
-
-    @NotNull
-    @Size(min = 4)
-    var basePackage = ""
-
-    @NotNull
-    @Size(min = 4)
-    var group = ""
-
-    @NotNull
-    @Size(min = 1)
-    var version = ""
-
-    @NotNull
-    @Size(min = 4)
-    var databaseName = ""
-
-    @NotNull
-    var databaseUsername = ""
-
-    @NotNull
-    var databasePassword = ""
-
-}
+data class ProjectBean (
+        @NotNull @Size(min = 4) val name: String,
+        @NotNull val port: String,
+        @NotNull @Size(min = 4) val basePackage: String,
+        @NotNull @Size(min = 4) val group: String,
+        @NotNull @Size(min = 1) val version: String,
+        @NotNull @Size(min = 4) val databaseName: String,
+        @NotNull val databaseUsername: String,
+        @NotNull val databasePassword: String)
+    : BaseBean()

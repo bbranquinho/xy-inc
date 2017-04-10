@@ -44,36 +44,23 @@ open class ApiBuilderResource: BaseResource {
                     .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @PostMapping
-    fun createNewProject(@Valid @RequestBody project: ProjectBean): ProjectResultBean {
-        val createProjectResult = ProjectResultBean()
-
+    fun createNewProject(@Valid @RequestBody project: ProjectBean) =
         if (!apiBuilder.isProjectExists(project.name)) {
             apiBuilder.createProject(project)
-            createProjectResult.success = true
+            ProjectResultBean(true, "")
         } else {
-            createProjectResult.success = false
-            createProjectResult.message = "Project already exists."
+            ProjectResultBean(false, "Project already exists.")
         }
-
-        return createProjectResult
-    }
 
     @PostMapping("/model")
-    fun createNewEntity(@Valid @RequestBody model: ModelBean): ProjectResultBean {
-        val createProjectResult = ProjectResultBean()
-
+    fun createNewEntity(@Valid @RequestBody model: ModelBean) =
         if (!apiBuilder.isProjectExists(model.projectName)) {
-            createProjectResult.success = false
-            createProjectResult.message = "Project not found."
+            ProjectResultBean(false, "Project not found.")
         } else if (apiBuilder.isEntityExists(model.projectName, model.entity.name)) {
-            createProjectResult.success = false
-            createProjectResult.message = "Entity already exists."
+            ProjectResultBean(false, "Entity already exists.")
         } else {
             apiBuilder.createEntity(model.projectName, model.entity)
-            createProjectResult.success = true
+            ProjectResultBean(true, "")
         }
-
-        return createProjectResult
-    }
 
 }

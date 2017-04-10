@@ -1,11 +1,6 @@
 package br.com.xy.inc.utils.template
 
-open class EntityBean {
+import br.com.xy.inc.utils.BaseBean
 
-    var name = String()
-
-    var tableName = String()
-
-    var fields = ArrayList<FieldBean>()
-
-}
+data class EntityBean(val name: String, val tableName: String, val fields: ArrayList<FieldBean>)
+    : BaseBean()

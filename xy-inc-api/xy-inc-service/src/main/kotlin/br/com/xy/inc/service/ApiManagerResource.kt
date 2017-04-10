@@ -37,10 +37,9 @@ open class ApiManagerResource: BaseResource {
                 .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
     @PostMapping("/restart/{projectName}")
-    fun restartProject(@PathVariable("projectName") projectName: String): ResponseEntity<Any> {
+    fun restartProject(@PathVariable("projectName") projectName: String) = {
         stopProject(projectName)
-
-        return startProject(projectName)
+        startProject(projectName)
     }
 
 }
