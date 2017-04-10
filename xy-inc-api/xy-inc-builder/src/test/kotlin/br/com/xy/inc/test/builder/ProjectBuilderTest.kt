@@ -35,20 +35,20 @@ open class ProjectBuilderTest : BaseTest() {
 
         builder.createProject(project)
 
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/Application.kt").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/utils/ApplicationConfig.kt").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/utils/BaseEntity.kt").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/utils/GenericResource.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/Application.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/utils/ApplicationConfig.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/utils/BaseEntity.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/utils/GenericResource.kt").exists())
 
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/build.gradle").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/gradle.properties").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/README.md").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/settings.gradle").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/build.gradle").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/gradle.properties").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/README.md").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/settings.gradle").exists())
 
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/resources/application.yml").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/resources/application-dev.yml").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/resources/application-prod.yml").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/webapp/WEB-INF/jboss-web.xml").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/resources/application.yml").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/resources/application-dev.yml").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/resources/application-prod.yml").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/webapp/WEB-INF/jboss-web.xml").exists())
     }
 
     @Test
@@ -77,9 +77,9 @@ open class ProjectBuilderTest : BaseTest() {
 
         builder.createEntity(project, entity)
 
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/product/ProductEntity.kt").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/product/ProductRepository.kt").exists())
-        assertTrue(File(applicationProperties.projectPath + "/" + project.name + "/src/main/kotlin/br/com/xy/inc/example/product/ProductResource.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/product/ProductEntity.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/product/ProductRepository.kt").exists())
+        assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/product/ProductResource.kt").exists())
     }
 
 }

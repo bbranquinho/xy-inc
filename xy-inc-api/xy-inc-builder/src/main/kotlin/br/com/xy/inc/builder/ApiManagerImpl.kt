@@ -64,7 +64,8 @@ open class ApiManagerImpl: ApiManager {
         var shutdownResponse: StopResponseBean? = null
 
         try {
-            shutdownResponse = restTemplate.postForEntity("http://localhost:" + project.port + "/" + project.name + "/shutdown", {}, StopResponseBean::class.java).body
+            shutdownResponse = restTemplate
+                    .postForEntity("http://localhost:${project.port}/${project.name}/shutdown", {}, StopResponseBean::class.java).body
         } catch (e: Exception) {
             logger.debug(e.message)
         }
@@ -87,16 +88,16 @@ open class ApiManagerImpl: ApiManager {
 
         override fun run() {
             val projectDir = System.getProperty("user.dir")
-            val apiDir = projectDir + "/projects/" + project.name
-            val warDir = "build/libs/" + project.name + "-" + project.version + ".war"
+            val apiDir = "${projectDir}/projects/${project.name}"
+            val warDir = "build/libs/${project.name}-${project.version}.war"
             val os = System.getProperty("os.name").toLowerCase()
 
             var script = if (os.startsWith("linux") || os.startsWith("mac"))
-                projectDir + "/start_api.sh"
+                "${projectDir}/start_api.sh"
             else if (os.startsWith("win"))
-                projectDir + "/start_api.bat"
+                "${projectDir}/start_api.bat"
             else
-                throw Exception("OS [%s] not supported yet.".format(os))
+                throw Exception("OS [${os}] not supported yet.")
 
             try {
                 var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))
@@ -109,7 +110,7 @@ open class ApiManagerImpl: ApiManager {
                     logQueue.add(line)
                     logger.debug("API: [{}] output [{}]", project.name, line)
 
-                    while ((maxQueueSize != null) && (logQueue.size > maxQueueSize!!)) {
+                    while ((maxQueueSize != null) && (logQueue.size > maxQueueSize)) {
                         logQueue.poll()
                     }
 
@@ -118,7 +119,7 @@ open class ApiManagerImpl: ApiManager {
                 input.close()
 
                 if (process.waitFor() != 0) {
-                    throw Exception("Error to start the API [%s][%s].".format(project.name, formatError(process)))
+                    throw Exception("Error to start the API [${project.name}][${formatError(process)}].")
                 }
             } catch (e: Exception) {
                 logger.error(e.message, e)
