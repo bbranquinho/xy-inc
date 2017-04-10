@@ -59,7 +59,7 @@ open class ApiManagerImpl: ApiManager {
             return null
         }
 
-        logger.debug("Stopping the API [{}]", projectName)
+        logger.debug("Stopping the API [{}].", projectName)
 
         try {
             restTemplate.postForLocation("http://localhost:${project.port}/${project.name}/shutdown", {})
@@ -101,11 +101,11 @@ open class ApiManagerImpl: ApiManager {
                 val input = BufferedReader(InputStreamReader(process.getInputStream()))
                 var line = input.readLine()
 
-                logger.info("API: [{}] started", project.name)
+                logger.info("API: [{}] started.", project.name)
 
                 while (line != null) {
                     logQueue.add(line)
-                    logger.debug("API: [{}] output [{}]", project.name, line)
+                    logger.debug("API: [{}] output [{}].", project.name, line)
 
                     while ((maxQueueSize != null) && (logQueue.size > maxQueueSize)) {
                         logQueue.poll()
@@ -122,7 +122,7 @@ open class ApiManagerImpl: ApiManager {
                 logger.error(e.message, e)
             }
 
-            logger.info("API: [{}] stopped", project.name)
+            logger.info("API: [{}] stopped.", project.name)
 
             onFinish()
         }

@@ -97,7 +97,7 @@ open class ApiBuilderImpl : ApiBuilder {
         val file = File(applicationProperties.projectPath)
 
         if (!file.exists()) {
-            logger.info("Creating the project folder [{}]", applicationProperties.projectPath)
+            logger.info("Creating the project folder [{}].", applicationProperties.projectPath)
             file.mkdir()
         }
 
@@ -107,7 +107,7 @@ open class ApiBuilderImpl : ApiBuilder {
             projectFilePath.mkdir()
         }
 
-        logger.info("Creating the project folder [{}]", projectFilePath.absolutePath)
+        logger.info("Creating the project folder [{}].", projectFilePath.absolutePath)
         projectFilePath.mkdir()
         createPackageFolders(projectFilePath, project)
 
@@ -122,7 +122,7 @@ open class ApiBuilderImpl : ApiBuilder {
         val projectFilePath = File("${applicationProperties.projectPath}/${project.name}")
 
         if (!projectFilePath.exists()) {
-            throw Exception("Project must exist [${project.name}]")
+            throw Exception("Project [${project.name}] must exist.")
         }
 
         if (applicationProperties.isStartApiAutomatically) {
