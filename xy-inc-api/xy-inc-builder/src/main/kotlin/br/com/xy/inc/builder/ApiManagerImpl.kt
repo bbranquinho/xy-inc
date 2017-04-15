@@ -35,17 +35,11 @@ open class ApiManagerImpl: ApiManager {
 
         if (project == null) {
             logger.warn("Project [{}] not found.", projectName)
-            return false;
+            return false
         }
 
         apiCache.computeIfAbsent(projectName, {
-            logger.debug("Starting the API [{}]", it)
-
-            val apiRunnable = ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(it) })
-
-            apiRunnable.thread = Thread(apiRunnable)
-            apiRunnable.start()
-            apiRunnable
+            ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(it) }).start()
         })
 
         return true
@@ -81,9 +75,11 @@ open class ApiManagerImpl: ApiManager {
 
         val logQueue = ConcurrentLinkedQueue<String>()
 
-        var thread: Thread? = null
+        val thread: Thread = Thread(this)
 
         override fun run() {
+            logger.debug("Starting the API [{}]", project.name)
+
             val projectDir = System.getProperty("user.dir")
             val apiDir = "${projectDir}/projects/${project.name}"
             val warDir = "build/libs/${project.name}-${project.version}.war"
@@ -131,9 +127,13 @@ open class ApiManagerImpl: ApiManager {
 
         // Stop a thread not is a good practice, but in this case we can and have to do it.
         @Suppress("DEPRECATION")
-        fun stop() = thread?.stop()
+        fun stop() =
+                thread.stop()
 
-        fun start() = thread?.start()
+        fun start(): ApiRunnable {
+            thread.start()
+            return this
+        }
 
         private fun formatError(proc: Process): String {
             val input = BufferedReader(InputStreamReader(proc.getErrorStream()))
