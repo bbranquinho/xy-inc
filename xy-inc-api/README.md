@@ -12,7 +12,6 @@ Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
     2. Gradle (versão 2.14.1 - recomendada/testada)
-    3. Kotlin 1.1 (opcional)
 
 Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([thank you Jetbrains](https://www.jetbrains.com/idea/)) para realizar novos desenvolvimentos.
 
