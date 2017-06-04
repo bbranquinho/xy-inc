@@ -20,6 +20,12 @@ class ApiManagerResource @Autowired constructor(val apiManager: ApiManager): Bas
                 .map{ r -> ResponseEntity<List<String>>(r, HttpStatus.OK) }
                 .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
+    @GetMapping("/running", consumes = arrayOf(MediaType.ALL_VALUE))
+    fun getRunningApi() =
+            Optional.ofNullable(apiManager.getRunningApis())
+                    .map{ r -> ResponseEntity<List<String>>(r, HttpStatus.OK) }
+                    .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
+
     @PostMapping("/start/{projectName}")
     fun startProject(@PathVariable("projectName") projectName: String) =
         if (!apiManager.startApi(projectName))

@@ -55,6 +55,9 @@ class ApiManagerImpl @Autowired constructor(val apiBuilder: ApiBuilder, val rest
     }
 
     override fun getLogStatusApi(projectName: String) =
-        apiCache.get(projectName)?.getLog()
+            apiCache.get(projectName)?.getLog()
+
+    override fun getRunningApis() =
+            apiCache.keys().toList()
 
 }

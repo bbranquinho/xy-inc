@@ -10,4 +10,6 @@ interface ApiManager {
 
     fun getLogStatusApi(projectName: String): List<String>?
 
+    fun getRunningApis(): List<String>
+
 }
