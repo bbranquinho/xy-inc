@@ -67,7 +67,7 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
 A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
 
 ```sh
-$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] }' 'http://localhost:9000/xy-inc/api/project/model'
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name": "Product", "tableName": "tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] }' 'http://localhost:9000/xy-inc/api/project/{projectName}/model?projectName=mobile-api'
 ```
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
@@ -94,16 +94,16 @@ $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api'
 ```
 
-* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/entities** - Lista as entidades de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model** - Lista as entidades de uma API.
 
 ```sh
-$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/entities'
+$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/model'
 ```
 
-* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/entities/{nome da entidade}** - Busca informações de uma entidade de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model/{nome da entidade}** - Busca informações de uma entidade de uma API.
 
 ```sh
-$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/entities/product'
+$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/model/product'
 ```
 
 Para gerenciar a API foram criados serviços responsáveis por iniciar, parar, reiniciar e monitorar a API. A seguir são mostrados estes serviços e exemplos de chamadas.
