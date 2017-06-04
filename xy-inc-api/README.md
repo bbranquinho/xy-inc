@@ -132,12 +132,6 @@ $ curl -X POST --header 'Accept: application/json' 'http://localhost:9000/xy-inc
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
 ```
 
-* GET **ht<span>tp://localhost:9000/xy-inc/api/manager/log/{nome da API}** - Recupera parte do log da API.
-
-```sh
-$ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/manager/log/mobile-api'
-```
-
 * GET **ht<span>tp://localhost:9000/xy-inc/api/manager/running** - Lista as APIs que estão em execução.
 
 ```sh
