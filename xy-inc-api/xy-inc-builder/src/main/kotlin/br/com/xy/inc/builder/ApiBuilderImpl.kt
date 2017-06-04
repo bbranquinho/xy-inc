@@ -5,41 +5,32 @@ import br.com.xy.inc.builder.utils.PropertyReplacer
 import br.com.xy.inc.utils.ApplicationProperties
 import br.com.xy.inc.utils.builder.ApiBuilder
 import br.com.xy.inc.utils.builder.ApiManager
-import br.com.xy.inc.utils.template.EntityBean
+import br.com.xy.inc.utils.jsonToObject
+import br.com.xy.inc.utils.template.ModelBean
 import br.com.xy.inc.utils.template.ProjectBean
 import br.com.xy.inc.utils.template.TypeFieldBean
-import com.fasterxml.jackson.databind.ObjectMapper
+import br.com.xy.inc.utils.writeJsonToFile
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-open class ApiBuilderImpl : ApiBuilder {
+class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplacer, var applicationProperties: ApplicationProperties) : ApiBuilder {
 
-    val logger = LoggerFactory.getLogger(ApiBuilderImpl::class.java)
-
-    @Autowired
-    lateinit var propertyReplacer: PropertyReplacer
+    private val logger = LoggerFactory.getLogger(ApiBuilderImpl::class.java)
 
     @Autowired
-    lateinit var applicationProperties: ApplicationProperties
-
-    @Autowired
-    lateinit var mapper: ObjectMapper
-
-    @Autowired
-    lateinit var apiManager: ApiManager
+    private lateinit var apiManager: ApiManager
 
     override fun isProjectExists(projectName: String) =
             File("${applicationProperties.projectPath}/${projectName}").exists()
 
-    override fun isEntityExists(projectName: String, entityName: String) =
-            File("${applicationProperties.projectPath}/${projectName}/.xyi/${entityName.toLowerCase()}.json").exists()
+    override fun isModelExists(projectName: String, modelName: String) =
+            File("${applicationProperties.projectPath}/${projectName}/.xyi/${modelName.toLowerCase()}.json").exists()
 
-    override fun createEntity(projectName: String, entity: EntityBean) =
-            createEntity(mapper.readValue(File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json"),
-                    ProjectBean::class.java), entity)
+    override fun createModel(projectName: String, model: ModelBean) =
+            createModel(File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json").jsonToObject(ProjectBean::class.java), model)
 
     override fun getAllProjects(): List<ProjectBean> {
         val projectFilePath = File(applicationProperties.projectPath)
@@ -50,7 +41,7 @@ open class ApiBuilderImpl : ApiBuilder {
                 val project = File("${it.absolutePath}/.xyi/project.json")
 
                 if (project.exists() && project.isFile()) {
-                    projects.add(mapper.readValue(project, ProjectBean::class.java))
+                    projects.add(project.jsonToObject(ProjectBean::class.java))
                 } else {
                     logger.error("Project not found [{}].", project.absolutePath)
                 }
@@ -64,22 +55,13 @@ open class ApiBuilderImpl : ApiBuilder {
         val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json")
 
         return if (project.exists() && project.isFile())
-            mapper.readValue(project, ProjectBean::class.java)
+            project.jsonToObject(ProjectBean::class.java)
         else
             null
     }
 
-    override fun getEntitiyByProject(projectName: String, entityName: String): EntityBean? {
-        val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/${entityName}.json")
-
-        return if (project.exists() && project.isFile())
-            mapper.readValue(project, EntityBean::class.java)
-        else
-            null
-    }
-
-    override fun getEntitiesByProject(projectName: String): List<EntityBean>? {
-        val entities = ArrayList<EntityBean>()
+    override fun getModelsByProject(projectName: String): List<ModelBean>? {
+        val entities = ArrayList<ModelBean>()
         val project = File("${applicationProperties.projectPath}/${projectName}/.xyi")
 
         if (!project.exists()) {
@@ -87,10 +69,19 @@ open class ApiBuilderImpl : ApiBuilder {
         }
 
         project.listFiles { f -> f.isFile && !f.name.equals("project.json") }.forEach {
-            entities.add(mapper.readValue(it, EntityBean::class.java))
+            entities.add(it.jsonToObject(ModelBean::class.java))
         }
 
         return entities
+    }
+
+    override fun getModelByProject(projectName: String, modelName: String): ModelBean? {
+        val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/${modelName}.json")
+
+        return if (project.exists() && project.isFile())
+            project.jsonToObject(ModelBean::class.java)
+        else
+            null
     }
 
     override fun createProject(project: ProjectBean) {
@@ -118,7 +109,7 @@ open class ApiBuilderImpl : ApiBuilder {
         }
     }
 
-    override fun createEntity(project: ProjectBean, entity: EntityBean) {
+    override fun createModel(project: ProjectBean, model: ModelBean) {
         val projectFilePath = File("${applicationProperties.projectPath}/${project.name}")
 
         if (!projectFilePath.exists()) {
@@ -131,7 +122,7 @@ open class ApiBuilderImpl : ApiBuilder {
 
         var fieldsCode = ""
 
-        entity.fields.forEach {
+        model.fields.forEach {
             val fieldProperties = arrayListOf<PairProperty>(
                     PairProperty("type", it.type.type),
                     PairProperty("name", it.name),
@@ -144,26 +135,26 @@ open class ApiBuilderImpl : ApiBuilder {
             fieldsCode += "\n" + propertyReplacer.replaceFieldProperties(fieldProperties, "/templates/entity/src/main/kotlin/entity/Field.kt.xyi") + "\n"
         }
 
-        val entityFolder = "${projectFilePath.absolutePath}/src/main/kotlin/${project.basePackage.replace(".", "/")}/${entity.name}"
-        val entitySimpleName = entity.name[0].toUpperCase() + entity.name.substring(1)
+        val modelFolder = "${projectFilePath.absolutePath}/src/main/kotlin/${project.basePackage.replace(".", "/")}/${model.name}"
+        val modelSimpleName = model.name[0].toUpperCase() + model.name.substring(1)
 
-        val entityProperties = arrayListOf<PairProperty>(
-                PairProperty("tableName", entity.tableName),
-                PairProperty("entityName", "${entitySimpleName}Entity"),
+        val modelProperties = arrayListOf<PairProperty>(
+                PairProperty("tableName", model.tableName),
+                PairProperty("entityName", "${modelSimpleName}Entity"),
                 PairProperty("keyType", TypeFieldBean.LONG.type),
                 PairProperty("field", fieldsCode),
                 PairProperty("packageName", project.basePackage),
-                PairProperty("entitySimpleName", entitySimpleName.toLowerCase()),
+                PairProperty("entitySimpleName", modelSimpleName.toLowerCase()),
                 PairProperty("keyName", "id"),
-                PairProperty("repositoryName", "${entitySimpleName}Repository"),
-                PairProperty("resourceName", "${entitySimpleName}Resource")
+                PairProperty("repositoryName", "${modelSimpleName}Repository"),
+                PairProperty("resourceName", "${modelSimpleName}Resource")
         )
 
-        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Entity.kt.xyi", entityFolder, "${entitySimpleName}Entity.kt")
-        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Repository.kt.xyi", entityFolder, "${entitySimpleName}Repository.kt")
-        saveCode(entityProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Resource.kt.xyi", entityFolder, "${entitySimpleName}Resource.kt")
+        saveCode(modelProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Entity.kt.xyi", modelFolder, "${modelSimpleName}Entity.kt")
+        saveCode(modelProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Repository.kt.xyi", modelFolder, "${modelSimpleName}Repository.kt")
+        saveCode(modelProperties, "/templates/entity/src/main/kotlin/entity/@entityName@Resource.kt.xyi", modelFolder, "${modelSimpleName}Resource.kt")
 
-        saveProperties(entity, "${entity.name}.json", projectFilePath)
+        saveProperties(model, "${model.name}.json", projectFilePath)
 
         if (applicationProperties.isStartApiAutomatically) {
             apiManager.startApi(project.name)
@@ -227,9 +218,7 @@ open class ApiBuilderImpl : ApiBuilder {
             xyiFolder.mkdir()
         }
 
-        val xyiProjectFile = File("${xyiFolder.absolutePath}/${filename.toLowerCase()}")
-
-        mapper.writerWithDefaultPrettyPrinter().writeValue(xyiProjectFile, project)
+        File("${xyiFolder.absolutePath}/${filename.toLowerCase()}").writeJsonToFile(project)
     }
 
 }

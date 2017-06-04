@@ -4,29 +4,17 @@ import br.com.xy.inc.utils.ApplicationProperties
 import br.com.xy.inc.utils.builder.ApiBuilder
 import br.com.xy.inc.utils.builder.ApiManager
 import br.com.xy.inc.utils.builder.beans.StopResponseBean
-import br.com.xy.inc.utils.template.ProjectBean
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentLinkedQueue
 
 @Component
-open class ApiManagerImpl: ApiManager {
+class ApiManagerImpl @Autowired constructor(val apiBuilder: ApiBuilder, val restTemplate: RestTemplate,
+                                            val applicationProperties: ApplicationProperties) : ApiManager {
 
-    val logger = LoggerFactory.getLogger(ApiManagerImpl::class.java)
-
-    @Autowired
-    lateinit var apiBuilder: ApiBuilder
-
-    @Autowired
-    lateinit var restTemplate: RestTemplate
-
-    @Autowired
-    lateinit var applicationProperties: ApplicationProperties
+    private val logger = LoggerFactory.getLogger(ApiManagerImpl::class.java)
 
     private val apiCache = ConcurrentHashMap<String, ApiRunnable>()
 
@@ -68,88 +56,5 @@ open class ApiManagerImpl: ApiManager {
 
     override fun getLogStatusApi(projectName: String) =
         apiCache.get(projectName)?.getLog()
-
-    private class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
-
-        val logger = LoggerFactory.getLogger(ApiRunnable::class.java)
-
-        val logQueue = ConcurrentLinkedQueue<String>()
-
-        val thread: Thread = Thread(this)
-
-        override fun run() {
-            logger.debug("Starting the API [{}]", project.name)
-
-            val projectDir = System.getProperty("user.dir")
-            val apiDir = "${projectDir}/projects/${project.name}"
-            val warDir = "build/libs/${project.name}-${project.version}.war"
-            val os = System.getProperty("os.name").toLowerCase()
-
-            var script = if (os.startsWith("linux") || os.startsWith("mac"))
-                "${projectDir}/start_api.sh"
-            else if (os.startsWith("win"))
-                "${projectDir}/start_api.bat"
-            else
-                throw Exception("OS [${os}] not supported yet.")
-
-            try {
-                var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))
-                val input = BufferedReader(InputStreamReader(process.getInputStream()))
-                var line = input.readLine()
-
-                logger.info("API: [{}] started.", project.name)
-
-                while (line != null) {
-                    logQueue.add(line)
-                    logger.debug("API: [{}] output [{}].", project.name, line)
-
-                    while ((maxQueueSize != null) && (logQueue.size > maxQueueSize)) {
-                        logQueue.poll()
-                    }
-
-                    line = input.readLine()
-                }
-                input.close()
-
-                if (process.waitFor() != 0) {
-                    throw Exception("Error to start the API [${project.name}][${formatError(process)}].")
-                }
-            } catch (e: Exception) {
-                logger.error(e.message, e)
-            }
-
-            logger.info("API: [{}] stopped.", project.name)
-
-            onFinish()
-        }
-
-        fun getLog() = logQueue.toList()
-
-        // Stop a thread not is a good practice, but in this case we can and have to do it.
-        @Suppress("DEPRECATION")
-        fun stop() =
-                thread.stop()
-
-        fun start(): ApiRunnable {
-            thread.start()
-            return this
-        }
-
-        private fun formatError(proc: Process): String {
-            val input = BufferedReader(InputStreamReader(proc.getErrorStream()))
-            var line = input.readLine()
-            var output = ""
-
-            while (line != null) {
-                output += line
-                line = input.readLine()
-            }
-
-            input.close()
-
-            return output
-        }
-
-    }
 
 }

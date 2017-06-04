@@ -3,8 +3,8 @@ package br.com.xy.inc.test.builder
 import br.com.xy.inc.test.builder.utils.BaseTest
 import br.com.xy.inc.utils.ApplicationProperties
 import br.com.xy.inc.utils.builder.ApiBuilder
-import br.com.xy.inc.utils.template.EntityBean
 import br.com.xy.inc.utils.template.FieldBean
+import br.com.xy.inc.utils.template.ModelBean
 import br.com.xy.inc.utils.template.ProjectBean
 import br.com.xy.inc.utils.template.TypeFieldBean
 import org.junit.Test
@@ -15,23 +15,22 @@ import kotlin.test.assertTrue
 open class ProjectBuilderTest : BaseTest() {
 
     @Autowired
-    lateinit var builder: ApiBuilder
+    private lateinit var builder: ApiBuilder
 
     @Autowired
     lateinit var applicationProperties: ApplicationProperties
 
     @Test
     fun testProjectBuilderProject() {
-        val project = ProjectBean()
-
-        project.name = "xy-inc-example"
-        project.port = 8081
-        project.basePackage = "br.com.xy.inc.example"
-        project.group = "br.com.xy.inc"
-        project.version = "0.0.1-SNAPSHOT"
-        project.databaseName = "xy_inc_example"
-        project.databaseUsername = "root"
-        project.databasePassword = "root"
+        val project = ProjectBean(
+                name = "xy-inc-example",
+                port = 8081,
+                basePackage = "br.com.xy.inc.example",
+                group = "br.com.xy.inc",
+                version = "0.0.1-SNAPSHOT",
+                databaseName = "xy_inc_example",
+                databaseUsername = "root",
+                databasePassword = "root")
 
         builder.createProject(project)
 
@@ -53,29 +52,27 @@ open class ProjectBuilderTest : BaseTest() {
 
     @Test
     fun testProjectBuilderEntity() {
-        val project = ProjectBean()
+        val project = ProjectBean(
+                name = "xy-inc-example",
+                port = 8081,
+                basePackage = "br.com.xy.inc.example",
+                group = "br.com.xy.inc",
+                version = "0.0.1-SNAPSHOT",
+                databaseName = "xy_inc_example",
+                databaseUsername = "root",
+                databasePassword = "root")
 
-        project.name = "xy-inc-example"
-        project.port = 8081
-        project.basePackage = "br.com.xy.inc.example"
-        project.group = "br.com.xy.inc"
-        project.version = "0.0.1-SNAPSHOT"
-        project.databaseName = "xy_inc_example"
-        project.databaseUsername = "root"
-        project.databasePassword = "root"
+        val fields = arrayListOf<FieldBean>(
+                FieldBean("name", TypeFieldBean.STRING),
+                FieldBean("description", TypeFieldBean.STRING),
+                FieldBean("price", TypeFieldBean.DECIMAL),
+                FieldBean("category", TypeFieldBean.STRING),
+                FieldBean("date", TypeFieldBean.DATETIME),
+                FieldBean("quantity", TypeFieldBean.FLOAT))
 
-        val entity = EntityBean()
-        entity.name = "product"
-        entity.tableName = "tb_product"
+        val entity = ModelBean(name = "product", tableName = "tb_product", fields = fields)
 
-        entity.fields.add(FieldBean("name", TypeFieldBean.STRING))
-        entity.fields.add(FieldBean("description", TypeFieldBean.STRING))
-        entity.fields.add(FieldBean("price", TypeFieldBean.DECIMAL))
-        entity.fields.add(FieldBean("category", TypeFieldBean.STRING))
-        entity.fields.add(FieldBean("date", TypeFieldBean.DATETIME))
-        entity.fields.add(FieldBean("quantity", TypeFieldBean.FLOAT))
-
-        builder.createEntity(project, entity)
+        builder.createModel(project, entity)
 
         assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/product/ProductEntity.kt").exists())
         assertTrue(File("${applicationProperties.projectPath}/${project.name}/src/main/kotlin/br/com/xy/inc/example/product/ProductRepository.kt").exists())

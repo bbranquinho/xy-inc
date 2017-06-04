@@ -5,12 +5,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + kotlinVersion
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.4.RELEASE'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:" + kotlinVersion
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.4.RELEASE"
     }
 }
 
-apply plugin: 'kotlin'
+apply plugin: "kotlin"
 
 subprojects {
     repositories {
@@ -21,28 +21,29 @@ subprojects {
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = '1.8'
+            jvmTarget = "1.8"
         }
     }
 
     group = xyIncGroup
     version = xyIncVersion
 
-    apply plugin: 'kotlin'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'java'
+    apply plugin: "kotlin"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "java"
 
-    compileJava.options.encoding = 'UTF-8'
+    compileJava.options.encoding = "UTF-8"
 
     dependencies {
-        compile ('org.jetbrains.kotlin:kotlin-stdlib:' + kotlinVersion)
-        compile ('org.jetbrains.kotlin:kotlin-reflect:' + kotlinVersion)
-        compile ('org.springframework.boot:spring-boot-starter-web') { exclude module: 'tomcat-embed-websocket' }
-        compile ('org.apache.commons:commons-lang3:3.5')
-        compile ('org.mockito:mockito-all:1.10.19')
+        compile ("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+        compile ("org.jetbrains.kotlin:kotlin-reflect:" + kotlinVersion)
+        compile ("org.springframework.boot:spring-boot-starter-web") { exclude module: "tomcat-embed-websocket" }
+        compile ("org.apache.commons:commons-lang3:3.5")
+        compile ("org.mockito:mockito-all:1.10.19")
+        compile ("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8")
 
-        testCompile ('org.jetbrains.kotlin:kotlin-test:' + kotlinVersion)
-        testCompile ('org.jetbrains.kotlin:kotlin-test-junit:' + kotlinVersion)
-        testCompile ('org.springframework.boot:spring-boot-starter-test')
+        testCompile ("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
+        testCompile ("org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}")
+        testCompile ("org.springframework.boot:spring-boot-starter-test")
     }
 }

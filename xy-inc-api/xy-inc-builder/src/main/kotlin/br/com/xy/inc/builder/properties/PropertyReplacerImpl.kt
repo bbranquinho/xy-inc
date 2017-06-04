@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-open class PropertyReplacerImpl: PropertyReplacer {
+class PropertyReplacerImpl: PropertyReplacer {
 
-    val logger: Logger = LoggerFactory.getLogger(PropertyReplacerImpl::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(PropertyReplacerImpl::class.java)
 
-    val delimiter = "@"
+    private val delimiter = "@"
 
     override fun replaceProperties(properties: List<PairProperty>, pathClasspath: String): String {
         val fileStream = javaClass.getResourceAsStream(pathClasspath)

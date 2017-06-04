@@ -11,7 +11,7 @@ Diversas funcionalidades podem ser desenvolvidas na API. Como prentende-se que s
 Para executar o projeto é necessária a instalação das seguintes ferramentas:
 
     1. JDK 1.8
-    2. Gradle (versão 2.14.1 - recomendada/testada)
+    2. Gradle (versão 3.5 - testada)
 
 Apesar de não ser necessário para rodar o projeto, é indicado o uso da IDE IntelliJ ([thank you Jetbrains](https://www.jetbrains.com/idea/)) para realizar novos desenvolvimentos.
 
@@ -67,7 +67,7 @@ Após a criação da API, podem ser criadas entidades. Estas entidades são comp
 A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
 
 ```sh
-$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "projectName":"mobile-api", "entity": { "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] } }' 'http://localhost:9000/xy-inc/api/project/model'
+$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name":"product", "tableName":"tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] }' 'http://localhost:9000/xy-inc/api/project/model'
 ```
 
 Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.

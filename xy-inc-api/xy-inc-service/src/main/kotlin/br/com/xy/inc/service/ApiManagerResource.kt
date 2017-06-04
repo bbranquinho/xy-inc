@@ -12,10 +12,7 @@ import java.util.*
 
 @RestController
 @RequestMapping(path = arrayOf("/api/manager"))
-open class ApiManagerResource: BaseResource {
-
-    @Autowired
-    lateinit var apiManager: ApiManager
+class ApiManagerResource @Autowired constructor(val apiManager: ApiManager): BaseResource {
 
     @GetMapping("/log/{projectName}", consumes = arrayOf(MediaType.ALL_VALUE))
     fun getLogApi(@PathVariable("projectName") projectName: String) =
