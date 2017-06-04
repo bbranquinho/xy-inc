@@ -1,6 +1,6 @@
 # xy-inc-api
 
-Este projeto é responsável por criar APIs/projetos REST. Os serviços são criados de acordo com o desejo do usuário, tomando como base modelos de entidade.
+Este projeto é responsável por criar APIs/projetos REST. Os serviços são criados de acordo com o desejo do usuário, tomando como base modelos.
 
 Neste primeiro momento não existe uma interface especifica que facilita a manipulação das APIs. Logo, foi disponibilizado o Swagger para facilitar o acesso e a manipulação das APIs. Esta documentação é acessível na URL **ht<span>tp://localhost:9000/xy-inc/swagger-ui.html**
 
@@ -26,7 +26,7 @@ $ java -jar xy-inc-factory/build/libs/xy-inc-factory-0.0.1-SNAPSHOT.war
 
 A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (**xy-inc-factory-0.0.1-SNAPSHOT.war**) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
 
-## 3. Criação de APIs e Entidades
+## 3. Criação de APIs e Modelos
 
 Para realizar a criação de uma nova API é necessário especificar alguns parâmetros, sendo eles:
 
@@ -53,34 +53,34 @@ De posse destes dados é necessário realizar uma chamada POST ao serviço **ht<
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name":"mobile-api", "basePackage":"br.com.mobile.api", "group":"br.com.mobile.api", "databaseName":"mobile_api", "databaseUsername":"root", "databasePassword":"root", "port":8080, "version":"0.0.1-SNAPSHOT" }' 'http://localhost:9000/xy-inc/api/project'
 ```
 
-Após a criação da API, podem ser criadas entidades. Estas entidades são compostas pelos seguintes parâmetros:
+Após a criação da API, podem ser criados modelos. Estes modelos são compostas pelos seguintes parâmetros:
 
 * ***projectName***: Nome da API. Este nome faz referência a API que já foi criada anteriormente.
     * *Exemplo*: **mobile-api**
-* ***name***: Nome da entidade.
+* ***name***: Nome do modelo.
     * *Exemplo*: **product**
-* ***fields***: Lista de propriedades da entidade.
+* ***fields***: Lista de propriedades do modelo.
     * **name**: Nome da propriedade.
     * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
     * *Exemplo*: **"name": "description", "type": "STRING"**
 
-A partir dos atributos da entidade, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
+A partir dos atributos do modelo, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
 
 ```sh
 $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "name": "Product", "tableName": "tb_product", "fields": [{ "name":"name", "type":"STRING" }, { "name":"description", "type":"STRING" }, { "name":"price", "type":"DECIMAL" }, { "name":"category", "type":"STRING" }] }' 'http://localhost:9000/xy-inc/api/project/{projectName}/model?projectName=mobile-api'
 ```
 
-Para toda entidade criada é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros da entidade. Sendo assim, não crie propriedade com o nome **id**.
+Para todo modelo criado é atribuída uma propriedade **id**, responsável por ser o identificador único dos registros do modelo. Sendo assim, não crie propriedade com o nome **id**.
 
-Toda vez que APIs ou entidades são criadas os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
+Toda vez que APIs ou modelos são criados os serviços de gerenciamento da API. Estes serviços são responsáveis por iniciar, parar, reiniciar e monitorar a API.
 
-Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, toda entidade criada faz com que a API relacionada a entidade seja reiniciada.
+Após a criação de uma API ela é automaticamente colocada para rodar, conforme os parâmetros de sua criação. Outro ponto importante, todo modelo criado faz com que a API relacionado ao modelo seja reiniciada.
 
 Como ainda existem diversos pontos a serem melhorados, um deles é a persistência de dados. Toda a vez que a aplicação é reiniciada o banco de dados é recriado, não sendo assim guardados valores anteriormente cadastrados. Além disso, é muito importante reassaltar que o banco de dados atual é o [H2](http://www.h2database.com/html/main.html) em memória.
 
 ## 4. Gerenciamento das APIs
 
-Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e das entidades.  A seguir são mostrados estes serviços e exemplos de chamadas.
+Para facilitar o controle das APIs, foram criados serviços que realizam a listagem das APIs e dos modelos.  A seguir são mostrados estes serviços e exemplos de chamadas.
 
 * GET **ht<span>tp://localhost:9000/xy-inc/api/project** - Lista todas as APIs.
 
@@ -94,13 +94,13 @@ $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api'
 ```
 
-* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model** - Lista as entidades de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model** - Lista os modelos de uma API.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/model'
 ```
 
-* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model/{nome da entidade}** - Busca informações de uma entidade de uma API.
+* GET **ht<span>tp://localhost:9000/xy-inc/api/project/{nome da API}/model/{nome do modelo}** - Busca informações de um modelo de uma API.
 
 ```sh
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/api/project/mobile-api/model/product'
@@ -135,55 +135,55 @@ $ curl -X GET --header 'Accept: application/json' 'http://localhost:9000/xy-inc/
 ## 5. Testando as APIs
 
 
-Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por entidade, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
+Para cada API existe uma interface Swagger com as informações dos serviços disponíveis por modelo, estando acessível em: **ht<span>tp://localhost:{porta da API}/{nome da API}/swagger-ui.html** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/swagger-ui.html**
 
 Além do Swagger, o banco de dados pode ser acessado em **ht<span>tp://localhost:{porta da API}/{nome da API}/h2-console** Por exemplo, para a API **mobile-api** na porta 8080 temos o caminho **ht<span>tp://localhost:8080/mobile-api/h2-console** O usuário e a senha do banco são aqueles usados na criação da API e a url é **jdbc:h2:mem:{nome do banco}**, lembrando que o **{nome do banco}** corresponde ao nome do banco definido no momento da criação da API.
 
-Uma vez com a API rodando e as entidades criadas, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
+Uma vez com a API rodando e os modelos criados, são disponibilizados os seguintes serviços. A seguir são mostradas as chamadas dos serviços disponíveis.
 
-* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Lista todos os dados para a entidade especificada.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}** - Lista todos os dados para a modelo especificada.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product
 ```
 
-* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}** - Lista paginado (size = tamanho da página, page = número da página) os dados para a entidade especificada. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}**?page=**{página}**&size=**{tamanho da página}** - Lista paginado (size = tamanho da página, page = número da página) os dados para o modelo especificado. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10
 ```
 
-* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos da entidade}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos da entidade separados por vírgula) os dados para a entidade especificada usando ordenação por campos da entidade. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}**?page=**{página}**&size=**{tamanho da página}**&direction=**{direção da ordenação}**&fields=**{campos do modelo}** - Lista paginado (size = tamanho da página)(page = número da página)(direction = direção da ordenação)(fields = lista de campos do modelo separados por vírgula) os dados para o mode especificado usando ordenação por campos do modelo. Além de realizar a paginação, no cabeçalho da requisição são retornados os dados das páginas e da quantidade total de registros.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product?page=0&size=10&direction=DESC&fields=name,description
 ```
 
-* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**/**{id}** - Busca uma entidade pelo seu id.
+* GET ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}**/**{id}** - Busca um modelo pelo seu id.
 
 ```sh
 $ curl http://localhost:8080/mobile-api/api/product/1
 ```
 
-* POST ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Cria um novo registro para a entidade.
+* POST ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}** - Cria um novo registro para um modelo.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X POST -d '{"name":"Produto 1", "description":"Descrição 1", "price":10.23, "category":"Categoria 1"}' http://localhost:8080/mobile-api/api/product
 ```
 
-* PUT ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Edita o registro de uma entidade.
+* PUT ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}** - Edita o registro de um modelo.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X PUT -d '{"id":1, "name":"Produto Atualizada", "description":"Descrição Atualizada", "price":10.23, "category":"Categoria Atualizada"}' http://localhost:8080/mobile-api/api/product
 ```
 
-* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}**/**{id}** - Deleta o registro de uma entidade pelo **id**.
+* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}**/**{id}** - Deleta o registro de um modelo pelo **id**.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/mobile-api/api/product/1
 ```
 
-* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{entidade}** - Deleta o registro de uma entidade pelo **id**.
+* DELETE ht<span>tp://localhost:**{porta da API}**/**{nome da API}**/api/**{modelo}** - Deleta o registro de um modelo pelo **id**.
 
 ```sh
 $ curl -H "Content-Type: application/json" -X DELETE -d '{"id":1}' http://localhost:8080/mobile-api/api/product
