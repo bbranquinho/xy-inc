@@ -6,7 +6,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
+internal class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish: () -> Unit): Runnable {
 
     private val logger = LoggerFactory.getLogger(ApiRunnable::class.java)
 
@@ -22,12 +22,12 @@ class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish
         val warDir = "build/libs/${project.name}-${project.version}.war"
         val os = System.getProperty("os.name").toLowerCase()
 
-        var script = if (os.startsWith("linux") || os.startsWith("mac"))
-            "${projectDir}/start_api.sh"
-        else if (os.startsWith("win"))
-            "${projectDir}/start_api.bat"
-        else
-            throw Exception("OS [${os}] not supported yet.")
+        var script = when {
+            os.startsWith("linux") -> "${projectDir}/start_api.sh"
+            os.startsWith("mac") -> "${projectDir}/start_api.sh"
+            os.startsWith("win") -> "${projectDir}/start_api.bat"
+            else -> throw Exception("OS [${os}] not supported yet.")
+        }
 
         try {
             var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))

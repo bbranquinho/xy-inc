@@ -7,9 +7,8 @@ import java.io.File
 
 private object JacksonExtension {
 
-    val jacksonObjectMapper: ObjectMapper by lazy {
-        jacksonObjectMapper()
-    }
+    val jacksonObjectMapper: ObjectMapper =
+            jacksonObjectMapper()
 
 }
 
@@ -18,10 +17,3 @@ fun File.writeJsonToFile(obj: Any) =
 
 fun <T> File.jsonToObject(t: Class<T>): T =
         JacksonExtension.jacksonObjectMapper.readValue(this, t)
-
-fun <T> String.jsonToObject(t: Class<T>): T =
-        JacksonExtension.jacksonObjectMapper.readValue(this, t)
-
-fun <T> T.objectToJson(): String =
-        JacksonExtension.jacksonObjectMapper.writeValueAsString(this)
-

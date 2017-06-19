@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplacer, var applicationProperties: ApplicationProperties) : ApiBuilder {
+class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplacer, val applicationProperties: ApplicationProperties) : ApiBuilder {
 
     private val logger = LoggerFactory.getLogger(ApiBuilderImpl::class.java)
 
@@ -54,10 +54,10 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
     override fun getProject(projectName: String): ProjectBean? {
         val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json")
 
-        return if (project.exists() && project.isFile())
-            project.jsonToObject(ProjectBean::class.java)
-        else
-            null
+        return when (project.exists() && project.isFile()) {
+            true -> project.jsonToObject(ProjectBean::class.java)
+            else -> null
+        }
     }
 
     override fun getModelsByProject(projectName: String): List<ModelBean>? {
@@ -78,10 +78,10 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
     override fun getModelByProject(projectName: String, modelName: String): ModelBean? {
         val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/${modelName}.json")
 
-        return if (project.exists() && project.isFile())
-            project.jsonToObject(ModelBean::class.java)
-        else
-            null
+        return when (project.exists() && project.isFile()) {
+            true -> project.jsonToObject(ModelBean::class.java)
+            else -> null
+        }
     }
 
     override fun createProject(project: ProjectBean) {

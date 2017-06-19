@@ -1,3 +1,3 @@
 package br.com.xy.inc.utils.template
 
-data class FieldBean(var name: String = "", var type: TypeFieldBean = TypeFieldBean.STRING)
+data class FieldBean(val name: String, val type: TypeFieldBean = TypeFieldBean.STRING)
