@@ -58,7 +58,6 @@ subprojects {
         compile ("org.springframework.boot:spring-boot-starter-web")
         compile ('com.fasterxml.jackson.module:jackson-module-kotlin')
         compile ("org.apache.commons:commons-lang3:3.5")
-        compile ("org.mockito:mockito-all:1.10.19")
 
         testCompile ("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
         testCompile ("org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}")
