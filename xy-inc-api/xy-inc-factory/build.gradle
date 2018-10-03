@@ -1,4 +1,5 @@
-apply plugin: "kotlin"
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(':xy-inc-builder')

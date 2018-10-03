@@ -37,9 +37,7 @@ subprojects {
     // info about this: https://github.com/spring-projects/spring-boot/issues/11059
     apply plugin: "io.spring.dependency-management"
     apply plugin: 'kotlin'
-    apply plugin: 'kotlin-spring'
     apply plugin: 'eclipse'
-    apply plugin: 'org.springframework.boot'
 
     group = xyIncGroup
     version = xyIncVersion
@@ -65,5 +63,12 @@ subprojects {
         testCompile ("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
         testCompile ("org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}")
         testCompile ("org.springframework.boot:spring-boot-starter-test")
+    }
+
+    test {
+        reports {
+            junitXml.enabled = false
+            html.enabled = true
+        }
     }
 }
