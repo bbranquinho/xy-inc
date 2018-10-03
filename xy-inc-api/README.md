@@ -61,7 +61,7 @@ Após a criação da API, podem ser criados modelos. Estes modelos são composta
     * *Exemplo*: **product**
 * ***fields***: Lista de propriedades do modelo.
     * **name**: Nome da propriedade.
-    * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsclo.
+    * **name**: Tipo da propriedade. Existem os seguintes tipos disponíveis: **DATETIME**, **DECIMAL**, **DOUBLE**, **FLOAT**, **INTEGER**, **LONG** e **STRING**. Observação: o tipo deve estar em maiúsculo.
     * *Exemplo*: **"name": "description", "type": "STRING"**
 
 A partir dos atributos do modelo, é realizada sua criação com a chamado POST do serviço **ht<span>tp://localhost:9000/xy-inc/api/project/model**, como mostrado a seguir:
