@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping(path = arrayOf("/api/manager"))
+@RequestMapping(path = ["/api/manager"])
 class ApiManagerResource @Autowired constructor(val apiManager: ApiManager): BaseResource {
 
-    @GetMapping("/log/{projectName}", consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping("/log/{projectName}", consumes = [MediaType.ALL_VALUE])
     fun getLogApi(@PathVariable("projectName") projectName: String) =
         Optional.ofNullable(apiManager.getLogStatusApi(projectName))
                 .map{ r -> ResponseEntity<List<String>>(r, HttpStatus.OK) }
                 .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
-    @GetMapping("/running", consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping("/running", consumes = [MediaType.ALL_VALUE])
     fun getRunningApi() =
             Optional.ofNullable(apiManager.getRunningApis())
                     .map{ r -> ResponseEntity<List<String>>(r, HttpStatus.OK) }

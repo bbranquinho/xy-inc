@@ -24,7 +24,7 @@ $ gradle clean build
 $ java -jar xy-inc-factory/build/libs/xy-inc-factory-0.0.1-SNAPSHOT.war
 ```
 
-A aplicação conta com um servidor de aplicação embarcado. Contudo, este mesmo projeto (**xy-inc-factory-0.0.1-SNAPSHOT.war**) pode ser executado no JBoss EAP 7.0 ou Wildfly 10.
+A aplicação conta com um servidor de aplicação embarcado.
 
 ## 3. Criação de APIs e Modelos
 
@@ -202,4 +202,4 @@ $ gradle clean build
 $ java -jar build/libs/mobile-api-0.0.1-SNAPSHOT.war
 ```
 
-Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas. Apesar de rodar com um servidor de aplicação embarcado, a API também pode ser colocada no JBoss EAP 7.0 ou Wildfly 10.
+Uma vantagem de ter um projeto separado é que isto permite a evolução da API, com regras mais elaboradas.

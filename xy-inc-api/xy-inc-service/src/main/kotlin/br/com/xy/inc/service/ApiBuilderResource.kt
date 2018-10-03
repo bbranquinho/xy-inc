@@ -14,27 +14,27 @@ import java.util.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = arrayOf("/api/project"))
+@RequestMapping(path = ["/api/project"])
 class ApiBuilderResource @Autowired constructor(val apiBuilder: ApiBuilder): BaseResource {
 
-    @GetMapping(consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping(consumes = [MediaType.ALL_VALUE])
     fun listProjects() =
             apiBuilder.getAllProjects()
 
-    @GetMapping("/{projectName}", consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping("/{projectName}", consumes = [MediaType.ALL_VALUE])
     fun findProject(@PathVariable("projectName") projectName: String) =
             Optional.ofNullable(apiBuilder.getProject(projectName))
                     .map{ r -> ResponseEntity<ProjectBean>(r, HttpStatus.OK) }
                     .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
 
-    @GetMapping("/{projectName}/model", consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping("/{projectName}/model", consumes = [MediaType.ALL_VALUE])
     fun findModelsByProject(@PathVariable("projectName") projectName: String) =
             Optional.ofNullable(apiBuilder.getModelsByProject(projectName))
                     .map{ r -> ResponseEntity<List<ModelBean>>(r, HttpStatus.OK) }
                     .orElse(ResponseEntity(HttpStatus.NOT_FOUND))
 
-    @GetMapping("/{projectName}/model/{modelName}", consumes = arrayOf(MediaType.ALL_VALUE))
+    @GetMapping("/{projectName}/model/{modelName}", consumes = [MediaType.ALL_VALUE])
     fun findModelByProject(@PathVariable("projectName") projectName: String, @PathVariable("modelName") modelName: String) =
             Optional.ofNullable(apiBuilder.getModelByProject(projectName, modelName))
                     .map{ r -> ResponseEntity<ModelBean>(r, HttpStatus.OK) }

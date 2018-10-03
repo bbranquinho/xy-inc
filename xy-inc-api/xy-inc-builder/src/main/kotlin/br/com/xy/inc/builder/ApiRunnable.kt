@@ -23,15 +23,15 @@ class ApiRunnable(val project: ProjectBean, val maxQueueSize: Int?, val onFinish
         val os = System.getProperty("os.name").toLowerCase()
 
         var script = if (os.startsWith("linux") || os.startsWith("mac"))
-            "${projectDir}/start_api.sh"
+            "$projectDir/start_api.sh"
         else if (os.startsWith("win"))
-            "${projectDir}/start_api.bat"
+            "$projectDir/start_api.bat"
         else
             throw Exception("OS [${os}] not supported yet.")
 
         try {
             var process = Runtime.getRuntime().exec(arrayOf(script, apiDir, warDir))
-            val input = BufferedReader(InputStreamReader(process.getInputStream()))
+            val input = BufferedReader(InputStreamReader(process.inputStream))
             var line = input.readLine()
 
             logger.info("API: [{}] started.", project.name)

@@ -9,10 +9,11 @@ import org.springframework.web.client.RestTemplate
 
 @Configuration
 @Import(UtilsConfig::class)
-@ComponentScan(basePackages = arrayOf("br.com.xy.inc.builder"))
+@ComponentScan(basePackages = ["br.com.xy.inc.builder"])
 open class BuilderConfig {
 
     @Bean
-    open fun getRestTemplate() = RestTemplate()
+    open fun getRestTemplate() =
+            RestTemplate()
 
 }

@@ -26,9 +26,11 @@ class ApiManagerImpl @Autowired constructor(val apiBuilder: ApiBuilder, val rest
             return false
         }
 
-        apiCache.computeIfAbsent(projectName, {
-            ApiRunnable(project, applicationProperties.apiLogSize, { apiCache.remove(it) }).start()
-        })
+        apiCache.computeIfAbsent(projectName) {
+            ApiRunnable(project, applicationProperties.apiLogSize) {
+                apiCache.remove(it)
+            }.start()
+        }
 
         return true
     }
@@ -51,11 +53,11 @@ class ApiManagerImpl @Autowired constructor(val apiBuilder: ApiBuilder, val rest
 
         apiCache.remove(projectName)?.stop()
 
-        return StopResponseBean("${projectName} stopped.")
+        return StopResponseBean("$projectName stopped.")
     }
 
     override fun getLogStatusApi(projectName: String) =
-            apiCache.get(projectName)?.getLog()
+            apiCache[projectName]?.getLog()
 
     override fun getRunningApis() =
             apiCache.keys().toList()

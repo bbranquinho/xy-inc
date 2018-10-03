@@ -9,5 +9,5 @@ import org.springframework.context.annotation.PropertySource
 @Configuration
 @Import(BuilderConfig::class)
 @PropertySource("classpath:application-builder-test.properties")
-@ComponentScan(basePackages = arrayOf("br.com.xy.inc.test.builder"))
+@ComponentScan(basePackages = ["br.com.xy.inc.test.builder"])
 open class BuilderTestConfig

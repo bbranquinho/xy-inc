@@ -24,13 +24,13 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
     private lateinit var apiManager: ApiManager
 
     override fun isProjectExists(projectName: String) =
-            File("${applicationProperties.projectPath}/${projectName}").exists()
+            File("${applicationProperties.projectPath}/$projectName").exists()
 
     override fun isModelExists(projectName: String, modelName: String) =
-            File("${applicationProperties.projectPath}/${projectName}/.xyi/${modelName.toLowerCase()}.json").exists()
+            File("${applicationProperties.projectPath}/$projectName/.xyi/${modelName.toLowerCase()}.json").exists()
 
     override fun createModel(projectName: String, model: ModelBean) =
-            createModel(File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json").jsonToObject(ProjectBean::class.java), model)
+            createModel(File("${applicationProperties.projectPath}/$projectName/.xyi/project.json").jsonToObject(ProjectBean::class.java), model)
 
     override fun getAllProjects(): List<ProjectBean> {
         val projectFilePath = File(applicationProperties.projectPath)
@@ -54,7 +54,7 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
     override fun getProject(projectName: String): ProjectBean? {
         val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/project.json")
 
-        return if (project.exists() && project.isFile())
+        return if (project.exists() && project.isFile)
             project.jsonToObject(ProjectBean::class.java)
         else
             null
@@ -68,7 +68,7 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
             return null
         }
 
-        project.listFiles { f -> f.isFile && !f.name.equals("project.json") }.forEach {
+        project.listFiles { f -> f.isFile && f.name != "project.json" }.forEach {
             entities.add(it.jsonToObject(ModelBean::class.java))
         }
 
@@ -123,7 +123,7 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
         var fieldsCode = ""
 
         model.fields.forEach {
-            val fieldProperties = arrayListOf<PairProperty>(
+            val fieldProperties = arrayListOf(
                     PairProperty("type", it.type.type),
                     PairProperty("name", it.name),
                     PairProperty("column", it.name),
@@ -138,7 +138,7 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
         val modelFolder = "${projectFilePath.absolutePath}/src/main/kotlin/${project.basePackage.replace(".", "/")}/${model.name}"
         val modelSimpleName = model.name[0].toUpperCase() + model.name.substring(1)
 
-        val modelProperties = arrayListOf<PairProperty>(
+        val modelProperties = arrayListOf(
                 PairProperty("tableName", model.tableName),
                 PairProperty("entityName", "${modelSimpleName}Entity"),
                 PairProperty("keyType", TypeFieldBean.LONG.type),
