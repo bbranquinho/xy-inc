@@ -1,14 +1,10 @@
 package br.com.xy.inc.factory
 
-import br.com.xy.inc.builder.utils.BuilderConfig
-import br.com.xy.inc.service.utils.ServiceConfig
-import br.com.xy.inc.utils.UtilsConfig
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors.regex
 import springfox.documentation.spi.DocumentationType
@@ -19,8 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @EnableAutoConfiguration
 @Configuration
 @EnableSwagger2
-@Import(BuilderConfig::class, ServiceConfig::class, UtilsConfig::class)
-@ComponentScan(basePackageClasses = [FactoryConfig::class])
+@ComponentScan(basePackages = ["br.com.xy.inc"])
 open class FactoryConfig {
 
     @Bean
