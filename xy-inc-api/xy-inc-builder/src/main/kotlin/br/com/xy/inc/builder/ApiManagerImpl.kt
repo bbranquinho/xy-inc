@@ -5,14 +5,14 @@ import br.com.xy.inc.utils.builder.ApiBuilder
 import br.com.xy.inc.utils.builder.ApiManager
 import br.com.xy.inc.utils.builder.beans.StopResponseBean
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.util.concurrent.ConcurrentHashMap
 
 @Component
-class ApiManagerImpl @Autowired constructor(val apiBuilder: ApiBuilder, val restTemplate: RestTemplate,
-                                            val applicationProperties: ApplicationProperties) : ApiManager {
+class ApiManagerImpl(val apiBuilder: ApiBuilder,
+                     val restTemplate: RestTemplate,
+                     val applicationProperties: ApplicationProperties) : ApiManager {
 
     private val logger = LoggerFactory.getLogger(ApiManagerImpl::class.java)
 
