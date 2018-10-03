@@ -50,6 +50,11 @@ subprojects {
             // details: https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/gradle-plugin/reference/html/#managing-dependencies-using-in-isolation
             mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
         }
+
+        dependencies {
+            dependency ("io.springfox:springfox-swagger-ui:${springfoxSwaggerVersion}")
+            dependency ("io.springfox:springfox-swagger2:${springfoxSwaggerVersion}")
+        }
     }
 
     dependencies {
@@ -57,7 +62,6 @@ subprojects {
         compile ("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
         compile ("org.springframework.boot:spring-boot-starter-web")
         compile ('com.fasterxml.jackson.module:jackson-module-kotlin')
-        compile ("org.apache.commons:commons-lang3:3.5")
 
         testCompile ("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
         testCompile ("org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}")
@@ -68,6 +72,15 @@ subprojects {
         reports {
             junitXml.enabled = false
             html.enabled = true
+        }
+    }
+
+    compileKotlin {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
 }
