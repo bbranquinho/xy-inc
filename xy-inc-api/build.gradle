@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
 
@@ -48,7 +48,7 @@ subprojects {
             // mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
             // but, as per source, that constant is a string containing the exact value below, and I think the one below is clearer
             // details: https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/gradle-plugin/reference/html/#managing-dependencies-using-in-isolation
-            mavenBom "org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE"
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
         }
     }
 
