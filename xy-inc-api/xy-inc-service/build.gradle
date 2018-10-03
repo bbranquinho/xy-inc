@@ -1,7 +1,5 @@
+apply plugin: "kotlin"
+
 dependencies {
     compile project(':xy-inc-utils')
-}
-
-bootRepackage {
-    enabled = false
 }

@@ -4,7 +4,8 @@ spring:
   profiles:
     active: dev
 server:
-  contextPath: /xy-inc
+  servlet:
+    contextPath: /xy-inc
   port: 9000
 app:
   project:

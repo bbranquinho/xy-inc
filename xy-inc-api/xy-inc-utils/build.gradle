@@ -1,7 +1,5 @@
+apply plugin: "kotlin"
+
 dependencies {
     compile ('org.apache.commons:commons-lang3:3.5')
-}
-
-bootRepackage {
-    enabled = false
 }

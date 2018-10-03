@@ -1,15 +1,11 @@
 package br.com.xy.inc.utils
 
-
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.File
 
 private object JacksonExtension {
 
-    val jacksonObjectMapper: ObjectMapper by lazy {
-        jacksonObjectMapper()
-    }
+    val jacksonObjectMapper = ObjectMapper()
 
 }
 
