@@ -76,7 +76,7 @@ class ApiBuilderImpl @Autowired constructor(val propertyReplacer: PropertyReplac
     }
 
     override fun getModelByProject(projectName: String, modelName: String): ModelBean? {
-        val project = File("${applicationProperties.projectPath}/${projectName}/.xyi/${modelName}.json")
+        val project = File("${applicationProperties.projectPath}/$projectName/.xyi/$modelName.json")
 
         return if (project.exists() && project.isFile())
             project.jsonToObject(ModelBean::class.java)
